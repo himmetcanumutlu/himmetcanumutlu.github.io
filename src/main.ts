@@ -6,10 +6,20 @@ import { initStores } from './stores'
 const root = document.getElementById('app')
 if (!root) throw new Error('Root element #app not found')
 
-// Production pages are prerendered: adopt the existing DOM. In dev the root
-// is empty and hydrate() falls back to a normal client render.
+// hydrate() swaps the prerendered markup for live components in one task.
+// Pin the root's height across the swap so the page can never collapse
+// and reset the visitor's scroll position on a slow connection.
+const scrollY = window.scrollY
+const prerendered = root.firstElementChild !== null
+if (prerendered) root.style.minHeight = `${root.offsetHeight}px`
+
 hydrate(App, root)
 
+if (prerendered) {
+  root.style.minHeight = ''
+  if (window.scrollY !== scrollY) window.scrollTo(0, scrollY)
+}
+
 // Apply URL state (?domain, ?project) and the saved theme after hydration,
-// so the adopted DOM matches the prerendered HTML before anything changes.
+// so the first client render matches the prerendered HTML.
 initStores()

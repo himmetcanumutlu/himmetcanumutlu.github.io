@@ -7,6 +7,7 @@ interface CertBadgeProps {
   variant?: 'featured' | 'compact'
 }
 
+// Featured badges sit under an h3 (→ h4); wall badges sit under an issuer h5 (→ h6).
 export default function CertBadge({ cert, variant = 'compact' }: CertBadgeProps) {
   const issuer = issuerById(cert.issuerId)
 
@@ -16,7 +17,7 @@ export default function CertBadge({ cert, variant = 'compact' }: CertBadgeProps)
         {variant === 'featured' && issuer.bigTech ? <span class="cert__seal" aria-hidden="true"></span> : ''}
         <span>{issuer.name}</span>
       </p>
-      <h4 class="cert__title">{cert.title}</h4>
+      {variant === 'featured' ? <h4 class="cert__title">{cert.title}</h4> : <h6 class="cert__title">{cert.title}</h6>}
       {cert.originalTitle && variant === 'featured' ? <p class="cert__original">{cert.originalTitle}</p> : ''}
       <p class="cert__meta">
         {cert.issued ? <span>{formatMonth(cert.issued)}</span> : <span>Completed</span>}
@@ -25,6 +26,7 @@ export default function CertBadge({ cert, variant = 'compact' }: CertBadgeProps)
       {cert.url ? (
         <a class="cert__verify" href={cert.url} target="_blank" rel="noopener noreferrer">
           <span>Verify</span>
+          <span class="sr-only"> {cert.title}</span>
           <Icon name="external" />
         </a>
       ) : (

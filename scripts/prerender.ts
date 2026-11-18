@@ -27,7 +27,6 @@ const REQUIRED_MARKERS = [
   'id="media"',
   'id="contact"',
   'class="drawer"',
-  'class="modal palette"',
 ]
 
 async function main(): Promise<void> {

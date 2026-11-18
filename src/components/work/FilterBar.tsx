@@ -6,7 +6,7 @@ import filterStore from '../../stores/filter-store'
 export default class FilterBar extends Component {
   template() {
     return (
-      <div class="filter-bar" role="toolbar" aria-label="Filter projects by domain">
+      <div class="filter-bar" role="group" aria-label="Filter projects by domain">
         <button
           type="button"
           class={`filter-chip${filterStore.domain === null ? ' is-active' : ''}`}

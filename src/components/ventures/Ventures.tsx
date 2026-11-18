@@ -65,6 +65,7 @@ export default function Ventures() {
                 {cert.url ? (
                   <a class="issued__verify" href={cert.url} target="_blank" rel="noopener noreferrer">
                     <span>Verify</span>
+                    <span class="sr-only"> {cert.title}</span>
                     <Icon name="external" />
                   </a>
                 ) : (

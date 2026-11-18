@@ -18,7 +18,7 @@ export default class CertProgramCard extends Component {
         <p class="cert__issuer">
           <span>{issuerById(program.issuerId).name}</span>
         </p>
-        <h4 class="cert__title">{program.title}</h4>
+        <h6 class="cert__title">{program.title}</h6>
         <p class="cert__original">{program.description}</p>
         <p class="cert__meta">
           <span>{plural(certs.length, 'credential')}</span>

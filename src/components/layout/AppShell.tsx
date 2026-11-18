@@ -1,18 +1,26 @@
 import { Component } from '@geajs/core'
 import type { JSX } from '@geajs/core/jsx-runtime'
+import { isBrowser } from '../../lib/env'
 import filterStore from '../../stores/filter-store'
 import paletteStore from '../../stores/palette-store'
 import urlStore from '../../stores/url-store'
-import CommandPalette from '../palette/CommandPalette'
 import Toast from '../ui/Toast'
 import CaseStudyDrawer from '../work/CaseStudyDrawer'
 import Footer from './Footer'
 import NavBar from './NavBar'
-import { isBrowser } from '../../lib/env'
+
+const PALETTE_PREFETCH_MS = 2500
 
 const isTypingTarget = (target: EventTarget | null): boolean =>
   target instanceof HTMLElement &&
   (target.isContentEditable || target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.tagName === 'SELECT')
+
+// The command palette is code-split: it isn't part of the prerendered page and
+// is only needed once someone presses ⌘K, so it loads on demand (and is
+// prefetched when the browser is idle).
+const importPalette = () => import('../palette/CommandPalette')
+let paletteInstance: Component | null = null
+let paletteLoading: Promise<void> | null = null
 
 /**
  * Page frame. `data-focus` on the root drives CSS cross-highlighting:
@@ -24,6 +32,8 @@ const isTypingTarget = (target: EventTarget | null): boolean =>
  */
 export default class AppShell extends Component {
   bound = false
+  stopPaletteWatch: (() => void) | null = null
+  prefetchTimer = 0
 
   handleKeydown = (event: KeyboardEvent): void => {
     if ((event.metaKey || event.ctrlKey) && !event.altKey && event.key.toLowerCase() === 'k') {
@@ -47,6 +57,25 @@ export default class AppShell extends Component {
     urlStore.openProject(slug)
   }
 
+  mountPalette(): Promise<void> {
+    if (paletteInstance || paletteLoading) return paletteLoading ?? Promise.resolve()
+    paletteLoading = importPalette()
+      .then(({ default: CommandPalette }) => {
+        const host = this.el
+        if (!host) return
+        const palette = new CommandPalette()
+        palette.render(host)
+        paletteInstance = palette
+      })
+      .catch(error => {
+        console.error('Could not load the command palette', error)
+      })
+      .finally(() => {
+        paletteLoading = null
+      })
+    return paletteLoading
+  }
+
   onAfterRender(): void {
     // Lifecycle hooks also run during prerendering; browser-only from here.
     if (!isBrowser()) return
@@ -54,11 +83,23 @@ export default class AppShell extends Component {
     this.bound = true
     document.addEventListener('keydown', this.handleKeydown)
     document.addEventListener('click', this.handleClick)
+
+    this.stopPaletteWatch = paletteStore.observe('open', () => {
+      if (paletteStore.open) void this.mountPalette()
+    })
+
+    const prefetch = () => void importPalette()
+    const whenIdle = typeof window.requestIdleCallback === 'function' ? () => window.requestIdleCallback(prefetch) : prefetch
+    this.prefetchTimer = window.setTimeout(whenIdle, PALETTE_PREFETCH_MS)
   }
 
   dispose(): void {
     document.removeEventListener('keydown', this.handleKeydown)
     document.removeEventListener('click', this.handleClick)
+    window.clearTimeout(this.prefetchTimer)
+    this.stopPaletteWatch?.()
+    paletteInstance?.dispose()
+    paletteInstance = null
     super.dispose()
   }
 
@@ -74,7 +115,6 @@ export default class AppShell extends Component {
         </main>
         <Footer />
         <CaseStudyDrawer />
-        <CommandPalette />
         <Toast />
       </div>
     )
