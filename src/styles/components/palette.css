@@ -29,6 +29,16 @@
     font-size: var(--text-2xs);
   }
 
+  /* Platform-specific shortcut hint; data-platform is set in index.html. */
+  .kbd-mac,
+  [data-platform='mac'] .kbd-other {
+    display: none;
+  }
+
+  [data-platform='mac'] .kbd-mac {
+    display: inline-block;
+  }
+
   @media (max-width: 39.99rem) {
     .nav__search {
       width: 2.5rem;
@@ -37,7 +47,9 @@
     }
 
     .nav__search-label,
-    .nav__search kbd {
+    .nav__search .kbd-mac,
+    .nav__search .kbd-other,
+    [data-platform='mac'] .nav__search .kbd-mac {
       display: none;
     }
   }

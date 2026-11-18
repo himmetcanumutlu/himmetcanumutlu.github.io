@@ -15,7 +15,9 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "npm run validate && vite build",
+    "build": "npm run validate && vite build && npm run build:ssr && npm run prerender",
+    "build:ssr": "vite build --ssr src/server.ts --outDir .ssr --emptyOutDir",
+    "prerender": "tsx scripts/prerender.ts",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
     "validate": "tsx scripts/validate-content.ts",
@@ -23,7 +25,8 @@
     "check": "npm run typecheck && npm run validate"
   },
   "dependencies": {
-    "@geajs/core": "^1.5.1"
+    "@geajs/core": "^1.5.1",
+    "@geajs/ssr": "^1.0.4"
   },
   "devDependencies": {
     "@geajs/vite-plugin": "^1.5.0",

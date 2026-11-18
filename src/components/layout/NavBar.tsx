@@ -1,7 +1,7 @@
 import { Component } from '@geajs/core'
 import { profile } from '../../data/profile'
 import { sections } from '../../data/site'
-import { paletteShortcutLabel } from '../../lib/env'
+import { isBrowser } from '../../lib/env'
 import { watchActiveSection } from '../../lib/visible'
 import paletteStore from '../../stores/palette-store'
 import Icon from '../ui/Icon'
@@ -22,6 +22,8 @@ export default class NavBar extends Component {
   }
 
   onAfterRender(): void {
+    // Lifecycle hooks also run during prerendering; browser-only from here.
+    if (!isBrowser()) return
     if (this.stopSpy) return
 
     // Sections are looked up lazily on each pass, so ones mounted after the
@@ -75,7 +77,8 @@ export default class NavBar extends Component {
             >
               <Icon name="search" />
               <span class="nav__search-label">Search</span>
-              <kbd>{paletteShortcutLabel()}</kbd>
+              <kbd class="kbd-mac">⌘K</kbd>
+              <kbd class="kbd-other">Ctrl K</kbd>
             </button>
             <ThemeToggle />
           </div>

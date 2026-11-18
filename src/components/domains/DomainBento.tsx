@@ -7,6 +7,7 @@ import { plural } from '../../lib/labels'
 import { scrollToSection } from '../../lib/scroll'
 import filterStore from '../../stores/filter-store'
 import SectionHeader from '../layout/SectionHeader'
+import { isBrowser } from '../../lib/env'
 
 const section = getSection('domains')
 
@@ -31,6 +32,8 @@ export default class DomainBento extends Component {
   }
 
   onAfterRender(): void {
+    // Lifecycle hooks also run during prerendering; browser-only from here.
+    if (!isBrowser()) return
     const root = this.el
     if (!root || this.bound) return
     this.bound = true

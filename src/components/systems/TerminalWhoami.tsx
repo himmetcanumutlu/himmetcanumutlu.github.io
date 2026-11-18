@@ -1,7 +1,7 @@
 import { Component } from '@geajs/core'
 import { systemsLab } from '../../data/systems'
 import type { TerminalLine } from '../../data/types'
-import { prefersReducedMotion } from '../../lib/env'
+import { prefersReducedMotion, isBrowser } from '../../lib/env'
 import { onFirstVisible } from '../../lib/visible'
 import uiStore from '../../stores/ui-store'
 
@@ -34,6 +34,8 @@ export default class TerminalWhoami extends Component {
   stopRuns: (() => void) | null = null
 
   onAfterRender(): void {
+    // Lifecycle hooks also run during prerendering; browser-only from here.
+    if (!isBrowser()) return
     if (this.stopRuns || !this.el) return
     this.stopVisible = onFirstVisible(this.el, () => {
       if (this.seq === 0) this.boot(false)

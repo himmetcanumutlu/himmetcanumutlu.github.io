@@ -1,6 +1,6 @@
 import { Component } from '@geajs/core'
 import type { Metric } from '../../data/types'
-import { prefersReducedMotion } from '../../lib/env'
+import { prefersReducedMotion, isBrowser } from '../../lib/env'
 import { onFirstVisible } from '../../lib/visible'
 
 const DURATION_MS = 1200
@@ -20,6 +20,8 @@ export default class MetricStat extends Component {
   stopWatching: (() => void) | null = null
 
   onAfterRender(): void {
+    // Lifecycle hooks also run during prerendering; browser-only from here.
+    if (!isBrowser()) return
     const { metric } = this.props
     if (!this.el || metric.value === null || metric.value <= 0 || prefersReducedMotion()) return
     this.stopWatching = onFirstVisible(this.el, () => this.countUp(metric))

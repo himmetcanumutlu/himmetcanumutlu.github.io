@@ -25,7 +25,7 @@ npm run dev
 | Script | What it does |
 | --- | --- |
 | `npm run dev` | Start the dev server on <http://localhost:5173> |
-| `npm run build` | Validate content, then build to `dist/` |
+| `npm run build` | Validate content, build the client, then prerender `dist/index.html`, `404.html` and `sitemap.xml` |
 | `npm run preview` | Serve the production build locally |
 | `npm run typecheck` | Type-check the project |
 | `npm run validate` | Check the content layer for broken references and missing assets |
@@ -40,9 +40,12 @@ src/
                 systems lab, education, certifications, media, palette commands
   stores/       Gea stores: domain filter, URL sync, theme, command palette, UI
   lib/          Small browser helpers (scroll, clipboard, fuzzy search, observers)
+  components/   UI components, one per file
+  styles/       Design tokens, themes, layout and component CSS (cascade layers)
   App.tsx       Root component
-  main.ts       Client entry
-scripts/        Content validation and GitHub stats refresh
+  main.ts       Client entry (hydrates the prerendered page)
+  server.ts     Build-time prerender entry
+scripts/        Content validation, GitHub stats refresh, prerendering
 public/         Static files copied as-is (favicon, images, CV)
 ```
 
@@ -68,6 +71,13 @@ Drop these files into `public/assets/` (the validator lists anything still missi
 | `og/og-image.png` | 1200 × 630 social preview |
 | `logos/*.svg` | Issuer logos (huawei, google, ibm, nvidia, pg) |
 | `events/<event-id>/cover.jpg` | One cover photo per event in `src/data/events.ts` |
+
+## Rendering
+
+The page is prerendered at build time with `@geajs/ssr`, so the full content is in
+the HTML for search engines, link previews and visitors without JavaScript. On
+load, `hydrate()` adopts that markup and the stores apply URL state and the saved
+theme.
 
 ## URL state
 

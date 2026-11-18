@@ -4,6 +4,7 @@ import { copyText } from '../../lib/clipboard'
 import urlStore from '../../stores/url-store'
 import Icon from '../ui/Icon'
 import CaseStudyBody from './CaseStudyBody'
+import { isBrowser } from '../../lib/env'
 
 // Kept outside reactive state: a plain DOM reference for focus restoration.
 let returnFocus: HTMLElement | null = null
@@ -19,6 +20,8 @@ export default class CaseStudyDrawer extends Component {
   copyTimer = 0
 
   onAfterRender(): void {
+    // Lifecycle hooks also run during prerendering; browser-only from here.
+    if (!isBrowser()) return
     const dialog = this.dialogEl
     if (!dialog || this.stopObserving) return
     dialog.addEventListener('cancel', this.handleCancel)

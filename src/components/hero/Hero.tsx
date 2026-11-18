@@ -3,6 +3,7 @@ import { profile } from '../../data/profile'
 import Icon from '../ui/Icon'
 import Tag from '../ui/Tag'
 import NowLine from './NowLine'
+import { isBrowser } from '../../lib/env'
 
 /**
  * Above the fold: who, what, proof of now, and the three primary actions.
@@ -13,6 +14,8 @@ export default class Hero extends Component {
   photoEl: HTMLImageElement | null = null
 
   onAfterRender(): void {
+    // Lifecycle hooks also run during prerendering; browser-only from here.
+    if (!isBrowser()) return
     const img = this.photoEl
     if (!img) return
     if (img.complete && img.naturalWidth === 0) {

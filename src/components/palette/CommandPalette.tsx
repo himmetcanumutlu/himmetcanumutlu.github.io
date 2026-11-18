@@ -1,6 +1,7 @@
 import { Component } from '@geajs/core'
 import paletteStore from '../../stores/palette-store'
 import Icon from '../ui/Icon'
+import { isBrowser } from '../../lib/env'
 
 // Plain DOM reference kept outside reactive state.
 let returnFocus: HTMLElement | null = null
@@ -18,6 +19,8 @@ export default class CommandPalette extends Component {
   stopObserving: (() => void) | null = null
 
   onAfterRender(): void {
+    // Lifecycle hooks also run during prerendering; browser-only from here.
+    if (!isBrowser()) return
     const dialog = this.dialogEl
     if (!dialog || this.stopObserving) return
     dialog.addEventListener('cancel', this.handleCancel)

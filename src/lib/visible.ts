@@ -5,7 +5,8 @@ import { isBrowser } from './env'
  * Returns a cleanup function for `dispose()`.
  */
 export function onFirstVisible(el: Element, callback: () => void, options: IntersectionObserverInit = { threshold: 0.35 }): () => void {
-  if (!isBrowser() || typeof IntersectionObserver === 'undefined') {
+  if (!isBrowser()) return () => {}
+  if (typeof IntersectionObserver === 'undefined') {
     callback()
     return () => {}
   }

@@ -8,6 +8,7 @@ import Toast from '../ui/Toast'
 import CaseStudyDrawer from '../work/CaseStudyDrawer'
 import Footer from './Footer'
 import NavBar from './NavBar'
+import { isBrowser } from '../../lib/env'
 
 const isTypingTarget = (target: EventTarget | null): boolean =>
   target instanceof HTMLElement &&
@@ -47,6 +48,8 @@ export default class AppShell extends Component {
   }
 
   onAfterRender(): void {
+    // Lifecycle hooks also run during prerendering; browser-only from here.
+    if (!isBrowser()) return
     if (this.bound) return
     this.bound = true
     document.addEventListener('keydown', this.handleKeydown)

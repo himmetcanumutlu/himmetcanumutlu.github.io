@@ -1,6 +1,7 @@
 import { Component } from '@geajs/core'
 import { events } from '../../data/events'
 import { domainAttr } from '../../data/selectors'
+import { isBrowser } from '../../lib/env'
 
 const sorted = [...events].sort((a, b) => b.sortKey.localeCompare(a.sortKey))
 
@@ -21,6 +22,8 @@ export default class EventStrip extends Component {
   }
 
   onAfterRender(): void {
+    // Lifecycle hooks also run during prerendering; browser-only from here.
+    if (!isBrowser()) return
     const root = this.el
     if (!root || this.bound) return
     this.bound = true

@@ -45,7 +45,7 @@
     />
     <meta name="twitter:image" content="https://himmetcanumutlu.github.io/assets/og/og-image.png" />
 
-    <!-- Apply the saved or system theme before first paint to avoid a flash. -->
+    <!-- Apply the saved or system theme (and platform for shortcut hints) before first paint. -->
     <script>
       ;(function () {
         var root = document.documentElement
@@ -56,6 +56,7 @@
           else if (window.matchMedia('(prefers-color-scheme: light)').matches) theme = 'light'
         } catch (e) {}
         root.setAttribute('data-theme', theme)
+        root.setAttribute('data-platform', /Mac|iPhone|iPad|iPod/.test(navigator.platform || navigator.userAgent) ? 'mac' : 'other')
         root.style.colorScheme = theme
         var meta = document.querySelector('meta[name="theme-color"]')
         if (meta) meta.setAttribute('content', theme === 'light' ? '#f6f6f3' : '#0b0d12')
