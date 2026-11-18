@@ -17,3 +17,6 @@ Thumbs.db
 .vscode/*
 !.vscode/extensions.json
 .idea/
+
+# raw photos for scripts/fetch-assets.ts
+assets-src/

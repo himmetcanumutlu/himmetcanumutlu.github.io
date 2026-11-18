@@ -22,7 +22,8 @@
     "typecheck": "tsc --noEmit",
     "validate": "tsx scripts/validate-content.ts",
     "fetch:github": "tsx scripts/fetch-github.ts",
-    "check": "npm run typecheck && npm run validate"
+    "check": "npm run typecheck && npm run validate",
+    "fetch-assets": "tsx scripts/fetch-assets.ts"
   },
   "dependencies": {
     "@geajs/core": "^1.5.1",
@@ -31,6 +32,7 @@
   "devDependencies": {
     "@geajs/vite-plugin": "^1.5.0",
     "@types/node": "^24.0.0",
+    "sharp": "^0.35.5",
     "tsx": "^4.23.15",
     "typescript": "^6.0.3",
     "vite": "^8.3.8"

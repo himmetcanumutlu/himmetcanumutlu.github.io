@@ -18,11 +18,12 @@ export default class Hero extends Component {
     if (!isBrowser()) return
     const img = this.photoEl
     if (!img) return
-    if (img.complete && img.naturalWidth === 0) {
-      this.photoFailed = true
-      return
-    }
     img.addEventListener('error', () => (this.photoFailed = true), { once: true })
+    // The element may still be detached (and inert) here, which reports
+    // complete with no pixels; only judge it once it's in the document.
+    window.setTimeout(() => {
+      if (img.isConnected && img.complete && img.naturalWidth === 0) this.photoFailed = true
+    }, 0)
   }
 
   template() {

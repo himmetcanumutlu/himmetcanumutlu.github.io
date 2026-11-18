@@ -30,6 +30,7 @@ npm run dev
 | `npm run typecheck` | Type-check the project |
 | `npm run validate` | Check the content layer for broken references and missing assets |
 | `npm run fetch:github` | Refresh repository stars/forks in `src/data/generated/github.json` |
+| `npm run fetch-assets` | One-time fetch of the headshot, touch icon, issuer logos and OG card into `public/assets/`; crops event photos from `assets-src/events/` (`-- --force` regenerates) |
 | `npm run check` | Type check + content validation |
 
 ## Project structure
@@ -61,7 +62,7 @@ and missing assets before a build.
 
 ## Assets
 
-Drop these files into `public/assets/` (the validator lists anything still missing):
+`npm run fetch-assets` fills in everything except the CV and event photos. For an event cover, drop any photo at `assets-src/events/<event-id>.jpg` and rerun it; it is cropped to 1200 × 800. The validator lists anything still missing:
 
 | Path | Purpose |
 | --- | --- |
