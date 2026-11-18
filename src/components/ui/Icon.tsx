@@ -13,6 +13,9 @@ export type IconName =
   | 'external'
   | 'map-pin'
   | 'command'
+  | 'close'
+  | 'chevron-down'
+  | 'search'
 
 // 24×24 stroke icons; each name maps to one combined path.
 const PATHS: Record<IconName, string> = {
@@ -31,6 +34,9 @@ const PATHS: Record<IconName, string> = {
   'arrow-up': 'M12 19V5M5 12l7-7 7 7',
   external: 'M7 17 17 7M8 7h9v9',
   'map-pin': 'M20 10c0 6.5-8 12-8 12s-8-5.5-8-12a8 8 0 0 1 16 0zM12 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6z',
+  close: 'M18 6 6 18M6 6l12 12',
+  'chevron-down': 'm6 9 6 6 6-6',
+  search: 'M11 19a8 8 0 1 0 0-16 8 8 0 0 0 0 16zM21 21l-4.35-4.35',
   command:
     'M18 3a3 3 0 0 0-3 3v12a3 3 0 1 0 3-3H6a3 3 0 1 0 3 3V6a3 3 0 1 0-3 3h12a3 3 0 0 0 0-6z',
 }

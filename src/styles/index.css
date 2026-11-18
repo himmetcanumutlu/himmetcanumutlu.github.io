@@ -9,5 +9,10 @@
 @import './components/primitives.css';
 @import './components/shell.css';
 @import './components/hero.css';
+@import './components/work.css';
+@import './components/journey.css';
+@import './components/systems.css';
+@import './components/education.css';
+@import './components/palette.css';
 @import './components/footer.css';
 @import './utilities.css';

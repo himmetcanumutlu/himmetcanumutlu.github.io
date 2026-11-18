@@ -1,4 +1,4 @@
-import type { Section, Theme } from './types'
+import type { Section, SectionId, Theme } from './types'
 
 export const SITE_URL = 'https://himmetcanumutlu.github.io/'
 export const GITHUB_OWNER = 'himmetcanumutlu'
@@ -24,3 +24,9 @@ export const sections: Section[] = [
 ]
 
 export const sectionById = (id: string): Section | undefined => sections.find(s => s.id === id)
+
+export const getSection = (id: SectionId): Section => {
+  const section = sectionById(id)
+  if (!section) throw new Error(`Unknown section: ${id}`)
+  return section
+}

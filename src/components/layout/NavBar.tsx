@@ -1,7 +1,10 @@
 import { Component } from '@geajs/core'
 import { profile } from '../../data/profile'
 import { sections } from '../../data/site'
+import { paletteShortcutLabel } from '../../lib/env'
 import { watchActiveSection } from '../../lib/visible'
+import paletteStore from '../../stores/palette-store'
+import Icon from '../ui/Icon'
 import ThemeToggle from '../ui/ThemeToggle'
 
 const navSections = sections.filter(section => section.inNav)
@@ -63,6 +66,17 @@ export default class NavBar extends Component {
             </ul>
           </nav>
           <div class="nav__actions">
+            <button
+              type="button"
+              class="nav__search"
+              aria-label="Open command palette"
+              aria-keyshortcuts="Control+K Meta+K"
+              click={() => paletteStore.openPalette()}
+            >
+              <Icon name="search" />
+              <span class="nav__search-label">Search</span>
+              <kbd>{paletteShortcutLabel()}</kbd>
+            </button>
             <ThemeToggle />
           </div>
         </div>

@@ -1,12 +1,15 @@
 import { Component } from '@geajs/core'
+import DomainBento from './components/domains/DomainBento'
+import Education from './components/education/Education'
 import Hero from './components/hero/Hero'
+import Journey from './components/journey/Journey'
 import AppShell from './components/layout/AppShell'
-import SectionHeader from './components/layout/SectionHeader'
+import MediaWriting from './components/media/MediaWriting'
 import ProofStrip from './components/proof/ProofStrip'
-import { sections } from './data/site'
-
-// Content sections between the proof strip and the contact footer.
-const bodySections = sections.filter(section => section.id !== 'top' && section.id !== 'contact')
+import SystemsLab from './components/systems/SystemsLab'
+import Ventures from './components/ventures/Ventures'
+import FeaturedWork from './components/work/FeaturedWork'
+import Lab from './components/work/Lab'
 
 export default class App extends Component {
   template() {
@@ -14,13 +17,14 @@ export default class App extends Component {
       <AppShell>
         <Hero />
         <ProofStrip />
-        {bodySections.map(section => (
-          <section key={section.id} id={section.id} class="section" aria-labelledby={`${section.id}-title`}>
-            <div class="container">
-              <SectionHeader id={section.id} title={section.title} kicker={section.kicker} />
-            </div>
-          </section>
-        ))}
+        <DomainBento />
+        <FeaturedWork />
+        <Lab />
+        <Journey />
+        <Ventures />
+        <SystemsLab />
+        <Education />
+        <MediaWriting />
       </AppShell>
     )
   }

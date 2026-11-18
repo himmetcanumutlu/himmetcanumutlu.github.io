@@ -62,15 +62,16 @@ class UrlStore extends Store {
     this.write(mode, { drawer: true })
   }
 
+  /**
+   * Closing rewrites the current entry instead of calling history.back():
+   * browsers may skip entries created without a user gesture, which would
+   * land on an unrelated page state. The browser Back button still closes
+   * an open drawer through popstate.
+   */
   closeProject(): void {
     if (this.project === null) return
     this.project = null
-    if (isBrowser() && currentHistoryState().drawer) {
-      // The drawer was opened with pushState: step back so Back/Forward stay coherent.
-      window.history.back()
-      return
-    }
-    this.write('replace')
+    this.write('replace', { drawer: false })
   }
 
   /** Absolute, shareable link to a case study. */

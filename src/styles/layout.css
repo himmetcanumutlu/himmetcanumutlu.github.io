@@ -103,7 +103,7 @@
     }
 
     .bento > [data-size='sm'] {
-      grid-column: span 4;
+      grid-column: span 5;
     }
   }
 

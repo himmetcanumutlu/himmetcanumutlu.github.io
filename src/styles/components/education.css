@@ -1,0 +1,307 @@
+@layer components {
+  .education {
+    display: grid;
+    gap: var(--space-12);
+  }
+
+  .degree {
+    height: 100%;
+  }
+
+  .degree__institution {
+    font-weight: var(--weight-medium);
+    color: var(--domain);
+  }
+
+  .degree__mode {
+    font-size: var(--text-xs);
+    color: var(--text-subtle);
+  }
+
+  .degree__highlights {
+    display: grid;
+    gap: var(--space-1);
+    padding-left: 1.1rem;
+    color: var(--text-muted);
+    font-size: var(--text-sm);
+    line-height: var(--leading-relaxed);
+  }
+
+  /* ── Programs ────────────────────────────────────────────────────── */
+  .programs {
+    display: grid;
+    gap: var(--space-4);
+  }
+
+  .programs__list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 20rem), 1fr));
+    gap: var(--space-2);
+    padding: 0;
+    list-style: none;
+  }
+
+  .program {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.1rem var(--space-3);
+    align-items: baseline;
+    padding: var(--space-3) var(--space-4);
+    border: var(--border-width) solid var(--border);
+    border-radius: var(--radius-md);
+    background: var(--surface);
+  }
+
+  .program .dot {
+    align-self: center;
+    grid-row: span 2;
+  }
+
+  .program__name {
+    font-size: var(--text-sm);
+    font-weight: var(--weight-semibold);
+  }
+
+  .program__detail {
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+  }
+
+  /* ── Certification wall ──────────────────────────────────────────── */
+  .cert-wall {
+    display: grid;
+    gap: var(--space-5);
+  }
+
+  .cert-wall__featured {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr));
+    gap: var(--space-3);
+    padding: 0;
+    list-style: none;
+  }
+
+  .cert {
+    position: relative;
+    display: grid;
+    align-content: start;
+    gap: var(--space-2);
+    height: 100%;
+    padding: var(--space-4);
+    border: var(--border-width) solid var(--border);
+    border-radius: var(--radius-md);
+    background: var(--surface);
+  }
+
+  .cert--featured {
+    padding: var(--space-5);
+    border-top: 3px solid var(--domain);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .cert__issuer {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-family: var(--font-mono);
+    font-size: var(--text-2xs);
+    font-weight: var(--weight-semibold);
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+    color: var(--text-subtle);
+  }
+
+  .cert__seal {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 2px;
+    background: var(--domain);
+    transform: rotate(45deg);
+  }
+
+  .cert__title {
+    font-size: var(--text-sm);
+    font-weight: var(--weight-semibold);
+    line-height: var(--leading-snug);
+    letter-spacing: 0;
+  }
+
+  .cert--featured .cert__title {
+    font-size: var(--text-md);
+  }
+
+  .cert__original {
+    font-size: var(--text-xs);
+    color: var(--text-subtle);
+    line-height: var(--leading-snug);
+  }
+
+  .cert__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-1) var(--space-3);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+  }
+
+  .cert__id {
+    max-width: 100%;
+    overflow: hidden;
+    color: var(--text-subtle);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .cert__verify {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+    justify-self: start;
+    margin-top: auto;
+    font-size: var(--text-xs);
+    font-weight: var(--weight-medium);
+  }
+
+  .cert__verify .icon {
+    --icon-size: 0.8rem;
+  }
+
+  .cert--program {
+    background:
+      linear-gradient(to bottom right, color-mix(in srgb, var(--domain) 7%, transparent), transparent 60%),
+      var(--surface);
+  }
+
+  .cert__courses {
+    display: grid;
+    gap: var(--space-2);
+    margin-top: var(--space-2);
+    padding: 0;
+    list-style: none;
+  }
+
+  .cert__courses .cert {
+    background: var(--bg-elevated);
+  }
+
+  .disclosure {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+    justify-self: start;
+    color: var(--accent);
+    font-size: var(--text-xs);
+    font-weight: var(--weight-semibold);
+  }
+
+  .disclosure .icon,
+  .cert-wall__toggle .icon,
+  .issuer__toggle .icon {
+    --icon-size: 1rem;
+    transition: transform var(--duration-base) var(--ease-out);
+  }
+
+  .disclosure.is-open .icon,
+  .cert-wall__toggle.is-open .icon,
+  .issuer.is-open .issuer__toggle .icon {
+    transform: rotate(180deg);
+  }
+
+  .cert-wall__toggle {
+    justify-self: start;
+  }
+
+  .cert-wall__all {
+    display: grid;
+    gap: var(--space-8);
+    padding-top: var(--space-2);
+  }
+
+  .tier {
+    display: grid;
+    gap: var(--space-3);
+  }
+
+  .tier__heading {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--space-3);
+    padding-bottom: var(--space-2);
+    border-bottom: var(--border-width) solid var(--border);
+    font-size: var(--text-md);
+  }
+
+  .tier__count {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    font-weight: var(--weight-regular);
+    color: var(--text-subtle);
+  }
+
+  .tier__groups {
+    display: grid;
+    gap: var(--space-2);
+  }
+
+  .issuer {
+    border: var(--border-width) solid var(--border);
+    border-radius: var(--radius-md);
+    background: var(--bg-elevated);
+  }
+
+  .issuer__heading {
+    font-size: inherit;
+    letter-spacing: 0;
+  }
+
+  .issuer__toggle {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-1) var(--space-3);
+    width: 100%;
+    padding: var(--space-3) var(--space-4);
+    text-align: left;
+  }
+
+  .issuer__toggle .icon {
+    margin-left: auto;
+    color: var(--text-subtle);
+  }
+
+  .issuer__name {
+    font-weight: var(--weight-semibold);
+  }
+
+  .issuer__count,
+  .issuer__latest {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--text-subtle);
+  }
+
+  .issuer__cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 16rem), 1fr));
+    gap: var(--space-2);
+    padding: 0 var(--space-4) var(--space-4);
+    list-style: none;
+  }
+
+  /* ── Media ───────────────────────────────────────────────────────── */
+  .media-card__meta {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--text-subtle);
+  }
+
+  .media-card__meta .icon {
+    --icon-size: 1rem;
+    color: var(--domain);
+  }
+}

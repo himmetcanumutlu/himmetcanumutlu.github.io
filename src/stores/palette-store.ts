@@ -67,7 +67,8 @@ class PaletteStore extends Store {
   setActive(index: number): void {
     const count = this.results.length
     if (count === 0) return
-    this.activeIndex = Math.max(0, Math.min(index, count - 1))
+    const next = Math.max(0, Math.min(index, count - 1))
+    if (next !== this.activeIndex) this.activeIndex = next
   }
 
   move(delta: number): void {
@@ -84,7 +85,10 @@ class PaletteStore extends Store {
   run(command: Command): void {
     this.restoreFocus = !movesFocus(command.action)
     this.close()
-    execute(command.action)
+    // Act after the dialog has closed: content behind a modal is inert, so
+    // scrolling/focusing or opening another dialog must wait one task.
+    if (isBrowser()) window.setTimeout(() => execute(command.action), 0)
+    else execute(command.action)
   }
 }
 
