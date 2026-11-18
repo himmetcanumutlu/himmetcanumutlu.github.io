@@ -29,9 +29,13 @@ export default class EventStrip extends Component {
     this.bound = true
     // `error` doesn't bubble; listen in the capture phase.
     root.addEventListener('error', this.onImageError, true)
-    root.querySelectorAll('img').forEach(img => {
-      if (img.complete && img.naturalWidth === 0) markMissing(img)
-    })
+    // Images can still be detached (and inert) at this point, which reports
+    // complete with no pixels; only judge the ones already in the document.
+    window.setTimeout(() => {
+      root.querySelectorAll('img').forEach(img => {
+        if (img.isConnected && img.complete && img.naturalWidth === 0) markMissing(img)
+      })
+    }, 0)
   }
 
   dispose(): void {
@@ -61,8 +65,7 @@ export default class EventStrip extends Component {
               <figcaption class="event__caption">
                 <span class="event__name">{event.name}</span>
                 <span class="event__meta">
-                  {event.role} · {event.when}
-                  {event.venue ? ` · ${event.venue}` : ''}
+                  {`${event.role} · ${event.when}${event.venue ? ` · ${event.venue}` : ''}`}
                 </span>
               </figcaption>
             </figure>

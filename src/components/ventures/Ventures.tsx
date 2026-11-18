@@ -60,7 +60,7 @@ export default function Ventures() {
               <li key={cert.id} class="issued__item">
                 <span class="issued__name">{cert.title}</span>
                 <span class="issued__meta">
-                  {cert.credentialId} · {formatMonth(cert.issued)}
+                  {`${cert.credentialId} · ${formatMonth(cert.issued)}`}
                 </span>
                 {cert.url ? (
                   <a class="issued__verify" href={cert.url} target="_blank" rel="noopener noreferrer">

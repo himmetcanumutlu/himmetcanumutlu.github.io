@@ -6,16 +6,18 @@
  *   npm run fetch-assets -- --force regenerate everything
  *
  * Sources
- *  - headshot + touch icon: GitHub profile avatar
+ *  - headshot + touch icon: assets-src/headshot.{jpg,jpeg,png,webp} when present,
+ *    otherwise the GitHub profile avatar
  *  - issuer logos: Simple Icons (CC0) and Wikimedia Commons (public-domain text logos)
  *  - Open Graph card: rendered locally from profile data + the headshot
  *  - event covers: any photo dropped at assets-src/events/<event-id>.{jpg,jpeg,png,webp}
- *    is center-cropped to 3:2 (assets-src/ is git-ignored)
+ *    is cropped to 3:2; portrait shots are letterboxed over a blurred copy of
+ *    themselves instead of losing most of the frame (assets-src/ is git-ignored)
  *
  * This is run by hand; nothing in CI calls it.
  */
 import { existsSync, mkdirSync, readdirSync } from 'node:fs'
-import { writeFile } from 'node:fs/promises'
+import { readFile, writeFile } from 'node:fs/promises'
 import { dirname, extname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import sharp from 'sharp'
@@ -62,8 +64,23 @@ const escapeXml = (value: string) =>
 
 const sentenceCase = (value: string) => value.charAt(0).toUpperCase() + value.slice(1)
 
+const SOURCE_EXTENSIONS = new Set(['.jpg', '.jpeg', '.png', '.webp'])
+
+/** Finds assets-src/<dir>/<name>.<image extension>, if one was dropped in. */
+const findSource = (dir: string, name: string): string | null => {
+  const folder = resolve(sourceDir, dir)
+  if (!existsSync(folder)) return null
+  const match = readdirSync(folder).find(file => {
+    const ext = extname(file).toLowerCase()
+    return SOURCE_EXTENSIONS.has(ext) && file.slice(0, -ext.length) === name
+  })
+  return match ? resolve(folder, match) : null
+}
+
 // ── Headshot ─────────────────────────────────────────────────────────
-const fetchAvatar = async (): Promise<Buffer> => {
+const loadHeadshotSource = async (): Promise<Buffer> => {
+  const local = findSource('.', 'headshot')
+  if (local) return readFile(local)
   const response = await fetch(`https://api.github.com/users/${GITHUB_USER}`, {
     headers: { 'User-Agent': USER_AGENT, Accept: 'application/vnd.github+json' },
   })
@@ -74,12 +91,12 @@ const fetchAvatar = async (): Promise<Buffer> => {
   return download(url.toString())
 }
 
-/** Square crop centred on the face (the avatar frames the head upper-centre). */
+/** Tighter square crop for small icons; portraits frame the head upper-centre. */
 const faceCrop = async (image: Buffer, size: number) => {
   const { width = 0, height = 0 } = await sharp(image).metadata()
-  const side = Math.round(Math.min(width, height) * 0.6)
+  const side = Math.round(Math.min(width, height) * 0.62)
   const left = Math.max(0, Math.min(width - side, Math.round(width * 0.49 - side / 2)))
-  const top = Math.max(0, Math.min(height - side, Math.round(height * 0.02)))
+  const top = Math.max(0, Math.min(height - side, Math.round(height * 0.05)))
   return sharp(image).extract({ left, top, width: side, height: side }).resize(size, size)
 }
 
@@ -91,7 +108,7 @@ const writeHeadshots = async (avatar: Buffer) => {
       .resize(size, size, { fit: 'cover', position: 'attention' })
       .jpeg({ quality: 86, mozjpeg: true, progressive: true })
       .toBuffer()
-    await save(headshot, image, width < size ? `upscaled from ${width}px source` : undefined)
+    await save(headshot, image, width < size ? `upscaled from a ${width}px source` : `from a ${width}px source`)
   }
 
   const touchIcon = '/assets/img/apple-touch-icon.png'
@@ -221,30 +238,27 @@ const writeOgImage = async (avatar: Buffer) => {
 }
 
 // ── Event covers ─────────────────────────────────────────────────────
-const SOURCE_EXTENSIONS = new Set(['.jpg', '.jpeg', '.png', '.webp'])
+const coverImage = async (source: string, width: number, height: number) => {
+  const input = await sharp(source).rotate().toBuffer()
+  const { width: w = 0, height: h = 0 } = await sharp(input).metadata()
+  if (w >= h) return sharp(input).resize(width, height, { fit: 'cover', position: 'attention' })
 
-const findEventSource = (id: string): string | null => {
-  const dir = resolve(sourceDir, 'events')
-  if (!existsSync(dir)) return null
-  const match = readdirSync(dir).find(name => {
-    const ext = extname(name).toLowerCase()
-    return SOURCE_EXTENSIONS.has(ext) && name.slice(0, -ext.length) === id
-  })
-  return match ? resolve(dir, match) : null
+  const backdrop = await sharp(input).resize(width, height, { fit: 'cover' }).blur(40).modulate({ brightness: 0.55 }).toBuffer()
+  const foreground = await sharp(input).resize({ height, fit: 'inside' }).toBuffer()
+  const { width: fw = 0 } = await sharp(foreground).metadata()
+  return sharp(backdrop).composite([{ input: foreground, left: Math.round((width - fw) / 2), top: 0 }])
 }
 
 const writeEventCovers = async () => {
   for (const event of events) {
-    const { src, width, height } = event.cover
+    const { src, width = 1200, height = 800 } = event.cover
     if (!shouldWrite(src)) continue
-    const source = findEventSource(event.id)
+    const source = findSource('events', event.id)
     if (!source) {
       results.push({ path: src, status: 'missing', note: `drop a photo at assets-src/events/${event.id}.jpg` })
       continue
     }
-    const image = await sharp(source)
-      .rotate()
-      .resize(width, height, { fit: 'cover', position: 'attention' })
+    const image = await (await coverImage(source, width, height))
       .jpeg({ quality: 82, mozjpeg: true, progressive: true })
       .toBuffer()
     await save(src, image)
@@ -252,7 +266,7 @@ const writeEventCovers = async () => {
 }
 
 // ── Run ──────────────────────────────────────────────────────────────
-const avatar = await fetchAvatar()
+const avatar = await loadHeadshotSource()
 await writeHeadshots(avatar)
 await writeLogos()
 await writeOgImage(avatar)

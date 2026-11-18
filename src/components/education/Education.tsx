@@ -18,7 +18,7 @@ export default function Education() {
               <li key={degree.id}>
                 <article class="card degree" data-d={domainAttr(degree.domains)} data-domain={degree.domains[0]}>
                   <p class="card__meta">
-                    {degree.degree} · {degree.years}
+                    {`${degree.degree} · ${degree.years}`}
                   </p>
                   <h3 class="card__title">{degree.program}</h3>
                   <p class="degree__institution">{degree.institution}</p>
@@ -53,10 +53,10 @@ export default function Education() {
                 <li key={program.id} class="program" data-d={domainAttr(program.domains)} data-domain={program.domains[0]}>
                   <span class="dot" aria-hidden="true"></span>
                   <span class="program__name">
-                    {program.provider} · {program.name}
+                    {`${program.provider} · ${program.name}`}
                   </span>
                   <span class="program__detail">
-                    {program.detail} · {program.year}
+                    {`${program.detail} · ${program.year}`}
                   </span>
                 </li>
               ))}

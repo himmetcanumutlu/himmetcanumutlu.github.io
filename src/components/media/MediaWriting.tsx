@@ -28,7 +28,7 @@ export default function MediaWriting() {
                 <p class="media-card__meta">
                   <Icon name={iconFor(item)} />
                   <span>
-                    {typeLabel[item.type]} · {item.outlet} · {item.when}
+                    {`${typeLabel[item.type]} · ${item.outlet} · ${item.when}`}
                   </span>
                 </p>
                 <h3 class="card__title">

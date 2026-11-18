@@ -11,7 +11,7 @@ export const events: EventItem[] = [
     sortKey: '2026-10',
     role: 'Speaker',
     domains: ['ai', 'community'],
-    cover: cover('prompt-eng-2026', 'Prompt Engineering workshop session'),
+    cover: cover('prompt-eng-2026', 'Slide on the RCTC prompt framework from the online Prompt Engineering workshop'),
   },
   {
     id: 'yzta-graduation',
@@ -21,7 +21,7 @@ export const events: EventItem[] = [
     sortKey: '2026-09',
     role: 'Graduate',
     domains: ['ai', 'academic'],
-    cover: cover('yzta-graduation', 'Academy of AI and Technology graduation day'),
+    cover: cover('yzta-graduation', 'Holding the Yapay Zeka ve Teknoloji Akademisi banner on graduation day'),
   },
   {
     id: 'gitex-ai-2026',
@@ -43,7 +43,7 @@ export const events: EventItem[] = [
     venue: 'İstanbul',
     role: 'Program participant',
     domains: ['ai'],
-    cover: cover('microsoft-tr-visit', 'Keynotes at the Microsoft Türkiye office'),
+    cover: cover('microsoft-tr-visit', 'In the atrium of the Microsoft Türkiye office in İstanbul'),
   },
   {
     id: 'diva-2026',
@@ -65,7 +65,7 @@ export const events: EventItem[] = [
     venue: 'İstanbul',
     role: 'Volunteer staff',
     domains: ['community'],
-    cover: cover('teknofest-2025', 'Volunteering at TEKNOFEST İstanbul 2025'),
+    cover: cover('teknofest-2025', 'On duty as volunteer staff at TEKNOFEST İstanbul 2025'),
   },
   {
     id: 'diva-2025',
@@ -76,7 +76,7 @@ export const events: EventItem[] = [
     venue: 'İPA Florya Campus',
     role: 'Volunteer staff',
     domains: ['community'],
-    cover: cover('diva-2025', 'Diva Conference 2025 volunteer team'),
+    cover: cover('diva-2025', 'Group photo of the Diva Conference 2025 team and attendees'),
   },
   {
     id: 'robolimpics-2025',
@@ -87,6 +87,6 @@ export const events: EventItem[] = [
     venue: 'Sivas',
     role: 'Technical desk volunteer',
     domains: ['community'],
-    cover: cover('robolimpics-2025', 'Technical desk at Robolimpics 2025'),
+    cover: cover('robolimpics-2025', 'At the Türkiye Teknoloji Takımı stand during Robolimpics 2025'),
   },
 ]

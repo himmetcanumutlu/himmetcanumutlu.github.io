@@ -62,7 +62,7 @@ and missing assets before a build.
 
 ## Assets
 
-`npm run fetch-assets` fills in everything except the CV and event photos. For an event cover, drop any photo at `assets-src/events/<event-id>.jpg` and rerun it; it is cropped to 1200 × 800. The validator lists anything still missing:
+`npm run fetch-assets` fills in everything except the CV. The headshot comes from `assets-src/headshot.jpg` if present, otherwise the GitHub avatar. For an event cover, drop any photo at `assets-src/events/<event-id>.jpg` and rerun it; it is cropped to 1200 × 800 (portrait shots are letterboxed). Add `-- --force` to regenerate existing files. The validator lists anything still missing:
 
 | Path | Purpose |
 | --- | --- |
