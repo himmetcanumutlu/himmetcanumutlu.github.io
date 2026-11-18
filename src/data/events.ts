@@ -54,7 +54,7 @@ export const events: EventItem[] = [
     venue: 'Dotshub',
     role: 'Volunteer staff',
     domains: ['community'],
-    cover: cover('diva-2026', 'Diva Conference 2026 volunteer team'),
+    cover: cover('diva-2026', 'Diva Conference 2026 organizers and volunteer team on stage at Dotshub'),
   },
   {
     id: 'teknofest-2025',
