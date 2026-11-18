@@ -1,0 +1,124 @@
+import type { Organization } from './types'
+
+// Swimlanes show role progression and status only — no dates.
+
+export const organizations: Organization[] = [
+  {
+    id: 'hsd-scu',
+    name: 'Huawei Student Developers — Sivas Cumhuriyet University',
+    shortName: 'HSD Sivas Cumhuriyet',
+    domains: ['community', 'cloud'],
+    stages: ['Founder & First Campus Ambassador', 'President', 'Executive Board Vice President (Mentoring)'],
+    status: 'current',
+    summary:
+      'Founded the campus chapter from zero, led it as its first ambassador, then handed leadership to a new team and moved to the executive board to mentor it.',
+    highlights: [
+      'Founder and first Campus Ambassador of HSD Cumhuriyet.',
+      'Huawei Cloud HCSD Campus Ambassador certification.',
+      'Handed off to a newly selected Campus Ambassador for 2026–2027.',
+    ],
+    links: [],
+    order: 1,
+  },
+  {
+    id: 'aws-sbg',
+    name: 'AWS Student Builder Group — Cumhuriyet University',
+    shortName: 'AWS SBG',
+    domains: ['cloud', 'community'],
+    stages: ['Founding Core Team Member & Community Specialist'],
+    status: 'current',
+    summary:
+      'Building the local cloud ecosystem by organizing AWS-focused technical workshops and developer events, and guiding students through cloud fundamentals and certification paths.',
+    highlights: ['Founding core team member.', 'AWS-focused workshops and developer events.'],
+    links: [
+      {
+        label: 'AWS SBG member badge',
+        href: 'https://www.credly.com/badges/47f80b93-2ffe-4a87-aef6-fe2b53823c5e/public_url',
+        kind: 'credential',
+      },
+    ],
+    order: 2,
+  },
+  {
+    id: 'sarkisla-bskk',
+    name: 'Şarkışla Science, Art & Culture Club (SCÜ Şarkışla BSKK)',
+    shortName: 'Şarkışla BSKK',
+    domains: ['community'],
+    stages: ['Board Member', 'Vice President (Digital Transformation)'],
+    status: 'handed-off',
+    summary:
+      'Built the club’s digital presence and brand from the ground up, contributed to board strategy, and co-leads its annual Prompt Engineering workshop.',
+    highlights: [
+      'Created the club’s social channels and visual identity from scratch.',
+      'Co-delivered the Prompt Engineering workshop, now in its 3rd year.',
+    ],
+    links: [],
+    order: 3,
+  },
+  {
+    id: 'hsd-turkiye',
+    name: 'HUAWEI Student Developers (HSD) Türkiye',
+    shortName: 'HSD Türkiye',
+    domains: ['community'],
+    stages: ['Campus Ambassador', 'Event Committee', 'Podcast Committee & LinkedIn Management'],
+    status: 'alumni',
+    summary: 'Contributed to the national HSD network through its event and podcast committees.',
+    highlights: ['Event committee member.', 'Podcast committee member and LinkedIn page manager.'],
+    links: [],
+    order: 4,
+  },
+  {
+    id: 'cusiber',
+    name: 'CÜSİBER / SİBERAY — Cumhuriyet University Cybersecurity Community',
+    shortName: 'CÜSİBER',
+    domains: ['systems', 'community'],
+    stages: ['Honorary Member'],
+    status: 'current',
+    summary: 'Takes part in the operational planning and execution of the cybersecurity community’s technical events.',
+    highlights: [],
+    links: [],
+    order: 5,
+  },
+  {
+    id: 'asist',
+    name: 'AI Safety Istanbul (ASIST)',
+    shortName: 'ASIST',
+    domains: ['ai', 'community'],
+    stages: ['Member'],
+    status: 'current',
+    summary: 'Advocates for AI safety, responsible AI and governance in Türkiye’s AI ecosystem.',
+    highlights: ['Represented ASIST at GITEX AI Türkiye 2026.'],
+    links: [],
+    order: 6,
+  },
+  {
+    id: 'kadin-yazilimci',
+    name: 'Kadın Yazılımcı — Women in Software Development',
+    shortName: 'Kadın Yazılımcı',
+    domains: ['community'],
+    stages: ['Volunteer & Ally · Event Organization Team'],
+    status: 'current',
+    summary: 'Supports community events and logistics while advocating for inclusivity in tech.',
+    highlights: ['Volunteer staff at Diva Conference 2025 and 2026.'],
+    links: [],
+    order: 7,
+  },
+  {
+    id: 'devrelism',
+    name: 'Devrelism',
+    shortName: 'Devrelism',
+    domains: ['community'],
+    stages: ['Marketing Team Member · LinkedIn Administration'],
+    status: 'alumni',
+    summary: 'Marketing team member for the Devrelism podcast.',
+    highlights: [],
+    links: [],
+    order: 8,
+  },
+]
+
+export const orgStatusLabel: Record<Organization['status'], string> = {
+  current: 'Active',
+  'handed-off': 'Handed off',
+  alumni: 'Alumni',
+}

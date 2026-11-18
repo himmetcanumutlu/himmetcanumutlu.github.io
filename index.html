@@ -1,16 +1,168 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <meta charset="UTF-8"/>
-    <title>Himmet Can Umutlu</title>
+    <title>H. Can Umutlu — AI &amp; Cloud Builder, Community Founder</title>
+    <meta
+      name="description"
+      content="H. Can Umutlu builds local-first AI tools, student tech communities and ventures from zero. Microsoft AI intern, Huawei Cloud Certified AI Developer (HCCDA–AI), founder of HSD Sivas Cumhuriyet."
+    />
+    <meta name="author" content="Himmet Can Umutlu" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://himmetcanumutlu.github.io/" />
 
-</head>
+    <meta name="color-scheme" content="dark light" />
+    <meta name="theme-color" content="#0b0d12" />
 
-    <body style="background-color:black;">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png" />
 
-<script>
+    <!-- Open Graph -->
+    <meta property="og:type" content="profile" />
+    <meta property="og:site_name" content="H. Can Umutlu" />
+    <meta property="og:title" content="H. Can Umutlu — AI &amp; Cloud Builder, Community Founder" />
+    <meta
+      property="og:description"
+      content="Local-first AI tools, student tech communities and ventures — built from zero."
+    />
+    <meta property="og:url" content="https://himmetcanumutlu.github.io/" />
+    <meta property="og:image" content="https://himmetcanumutlu.github.io/assets/og/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="H. Can Umutlu — AI &amp; Cloud Builder, Community Founder" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="profile:first_name" content="Himmet Can" />
+    <meta property="profile:last_name" content="Umutlu" />
 
-</script>
-</body>
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="H. Can Umutlu — AI &amp; Cloud Builder, Community Founder" />
+    <meta
+      name="twitter:description"
+      content="Local-first AI tools, student tech communities and ventures — built from zero."
+    />
+    <meta name="twitter:image" content="https://himmetcanumutlu.github.io/assets/og/og-image.png" />
+
+    <!-- Apply the saved or system theme before first paint to avoid a flash. -->
+    <script>
+      ;(function () {
+        var root = document.documentElement
+        var theme = 'dark'
+        try {
+          var saved = localStorage.getItem('theme')
+          if (saved === 'light' || saved === 'dark') theme = saved
+          else if (window.matchMedia('(prefers-color-scheme: light)').matches) theme = 'light'
+        } catch (e) {}
+        root.setAttribute('data-theme', theme)
+        root.style.colorScheme = theme
+        var meta = document.querySelector('meta[name="theme-color"]')
+        if (meta) meta.setAttribute('content', theme === 'light' ? '#f6f6f3' : '#0b0d12')
+      })()
+    </script>
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "@id": "https://himmetcanumutlu.github.io/#person",
+        "name": "Himmet Can Umutlu",
+        "alternateName": ["H. Can Umutlu", "Can Umutlu"],
+        "url": "https://himmetcanumutlu.github.io/",
+        "image": "https://himmetcanumutlu.github.io/assets/img/headshot.jpg",
+        "email": "mailto:himmetcanumutlu.business@gmail.com",
+        "jobTitle": "AI & Software Engineering Student",
+        "description": "Information Systems & Technologies student building local-first AI tools, student tech communities and ventures from zero.",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "İstanbul",
+          "addressCountry": "TR"
+        },
+        "alumniOf": [
+          {
+            "@type": "CollegeOrUniversity",
+            "name": "Sivas Cumhuriyet University",
+            "department": "Information Systems and Technologies"
+          },
+          {
+            "@type": "CollegeOrUniversity",
+            "name": "Istanbul University",
+            "department": "International Entrepreneurship (AUZEF)"
+          }
+        ],
+        "affiliation": [
+          { "@type": "Organization", "name": "Huawei Student Developers (HSD) — Sivas Cumhuriyet University" },
+          { "@type": "Organization", "name": "AWS Student Builder Group — Cumhuriyet University" },
+          { "@type": "Organization", "name": "AI Safety Istanbul (ASIST)" }
+        ],
+        "knowsAbout": [
+          "Artificial Intelligence",
+          "Large Language Models",
+          "Retrieval-Augmented Generation",
+          "Computer Vision",
+          "Cloud Computing",
+          "Huawei Cloud",
+          "Amazon Web Services",
+          "Linux Server Administration",
+          "Zero Trust Networking",
+          "Community Building",
+          "Entrepreneurship",
+          "Project Management"
+        ],
+        "knowsLanguage": ["tr", "en"],
+        "hasCredential": [
+          {
+            "@type": "EducationalOccupationalCredential",
+            "name": "HCCDA – AI",
+            "credentialCategory": "certification",
+            "recognizedBy": { "@type": "Organization", "name": "Huawei" }
+          },
+          {
+            "@type": "EducationalOccupationalCredential",
+            "name": "HCCDP – GaussDB",
+            "credentialCategory": "certification",
+            "recognizedBy": { "@type": "Organization", "name": "Huawei" }
+          },
+          {
+            "@type": "EducationalOccupationalCredential",
+            "name": "Google Project Management Professional Certificate",
+            "credentialCategory": "certification",
+            "recognizedBy": { "@type": "Organization", "name": "Google" }
+          }
+        ],
+        "sameAs": [
+          "https://github.com/himmetcanumutlu",
+          "https://www.linkedin.com/in/himmetcanumutlu",
+          "https://www.youtube.com/@hcanumutlu"
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <div id="app"></div>
+    <noscript>
+      <main style="max-width: 40rem; margin: 3rem auto; padding: 0 1.25rem; font-family: system-ui, sans-serif; line-height: 1.6">
+        <h1>H. Can Umutlu</h1>
+        <p>
+          AI &amp; Cloud builder who starts things from zero: local-first AI tools, student tech communities, and
+          ventures. Information Systems &amp; Technologies student at Sivas Cumhuriyet University, with a second degree in
+          International Entrepreneurship at Istanbul University.
+        </p>
+        <ul>
+          <li>Artificial Intelligence Intern — Microsoft AI Innovators Summer Program 2026</li>
+          <li>Huawei Cloud Certified AI Developer (HCCDA–AI) and HCCDP–GaussDB</li>
+          <li>Founder &amp; first Campus Ambassador — Huawei Student Developers, Sivas Cumhuriyet University</li>
+          <li>Founding Core Team — AWS Student Builder Group, Cumhuriyet University</li>
+        </ul>
+        <p>
+          <a href="mailto:himmetcanumutlu.business@gmail.com">himmetcanumutlu.business@gmail.com</a> ·
+          <a href="https://github.com/himmetcanumutlu">GitHub</a> ·
+          <a href="https://www.linkedin.com/in/himmetcanumutlu">LinkedIn</a> ·
+          <a href="https://www.youtube.com/@hcanumutlu">YouTube</a>
+        </p>
+      </main>
+    </noscript>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
 </html>

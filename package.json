@@ -1,0 +1,35 @@
+{
+  "name": "himmetcanumutlu.github.io",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Personal site of H. Can Umutlu — AI & cloud builder, community founder.",
+  "author": "Himmet Can Umutlu <himmetcanumutlu.business@gmail.com>",
+  "homepage": "https://himmetcanumutlu.github.io/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/himmetcanumutlu/himmetcanumutlu.github.io.git"
+  },
+  "engines": {
+    "node": ">=20.19"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "npm run validate && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit",
+    "validate": "tsx scripts/validate-content.ts",
+    "fetch:github": "tsx scripts/fetch-github.ts",
+    "check": "npm run typecheck && npm run validate"
+  },
+  "dependencies": {
+    "@geajs/core": "^1.5.1"
+  },
+  "devDependencies": {
+    "@geajs/vite-plugin": "^1.5.0",
+    "@types/node": "^24.0.0",
+    "tsx": "^4.23.15",
+    "typescript": "^6.0.3",
+    "vite": "^8.3.8"
+  }
+}
