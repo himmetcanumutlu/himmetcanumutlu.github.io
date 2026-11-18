@@ -1,0 +1,114 @@
+/*
+ * Color themes. Dark is the default; [data-theme] is set before first paint
+ * by index.html and kept in sync by the theme store.
+ * Every text/accent pair below meets WCAG AA (≥ 4.5:1) on --bg and --surface-2.
+ */
+@layer tokens {
+  :root,
+  [data-theme='dark'] {
+    color-scheme: dark;
+
+    --bg: #0b0d12;
+    --bg-elevated: #0f1218;
+    --surface: #12151c;
+    --surface-2: #181c25;
+    --surface-3: #1f2430;
+    --border: #262b36;
+    --border-strong: #343a48;
+
+    --text: #e8eaf0;
+    --text-muted: #a6acb9;
+    --text-subtle: #868d9b;
+    --text-inverse: #0b0d12;
+
+    --accent: #8fa8ff;
+    --accent-strong: #b3c3ff;
+    --accent-contrast: #0b0d12;
+    --focus-ring: #8fa8ff;
+
+    --success: #3ddc97;
+    --warning: #ffc457;
+    --danger: #ff8a7a;
+
+    --d-ai: #b69cff;
+    --d-cloud: #4cc3ff;
+    --d-community: #ffc457;
+    --d-systems: #3ddc97;
+    --d-ventures: #ff8a7a;
+    --d-academic: #b5e655;
+
+    --tint-strength: 14%;
+    --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.4);
+    --shadow-md: 0 8px 24px -8px rgb(0 0 0 / 0.55);
+    --shadow-lg: 0 24px 64px -16px rgb(0 0 0 / 0.65);
+    --backdrop: rgb(4 5 8 / 0.66);
+    --nav-bg: rgb(11 13 18 / 0.78);
+    --glow: radial-gradient(60rem 30rem at 15% -10%, rgb(143 168 255 / 0.12), transparent 60%),
+      radial-gradient(40rem 24rem at 95% 0%, rgb(182 156 255 / 0.08), transparent 60%);
+  }
+
+  [data-theme='light'] {
+    color-scheme: light;
+
+    --bg: #f6f6f3;
+    --bg-elevated: #fbfbf9;
+    --surface: #ffffff;
+    --surface-2: #ecece6;
+    --surface-3: #e2e2da;
+    --border: #dcdcd4;
+    --border-strong: #c6c6bc;
+
+    --text: #14161b;
+    --text-muted: #4a505c;
+    --text-subtle: #5f6572;
+    --text-inverse: #f6f6f3;
+
+    --accent: #3a56d4;
+    --accent-strong: #2a43b4;
+    --accent-contrast: #ffffff;
+    --focus-ring: #3a56d4;
+
+    --success: #0b7a51;
+    --warning: #875400;
+    --danger: #b33a2a;
+
+    --d-ai: #6b3fd4;
+    --d-cloud: #0b6aa8;
+    --d-community: #875400;
+    --d-systems: #0b7a51;
+    --d-ventures: #b33a2a;
+    --d-academic: #4a7309;
+
+    --tint-strength: 10%;
+    --shadow-sm: 0 1px 2px rgb(20 22 27 / 0.06);
+    --shadow-md: 0 8px 24px -10px rgb(20 22 27 / 0.18);
+    --shadow-lg: 0 24px 64px -20px rgb(20 22 27 / 0.28);
+    --backdrop: rgb(20 22 27 / 0.42);
+    --nav-bg: rgb(246 246 243 / 0.82);
+    --glow: radial-gradient(60rem 30rem at 15% -10%, rgb(58 86 212 / 0.08), transparent 60%),
+      radial-gradient(40rem 24rem at 95% 0%, rgb(107 63 212 / 0.06), transparent 60%);
+  }
+
+  /*
+   * Domain scoping: any element with data-domain gets --domain set to that
+   * domain's accent, so components only ever reference var(--domain).
+   */
+  [data-domain='ai'] {
+    --domain: var(--d-ai);
+  }
+  [data-domain='cloud'] {
+    --domain: var(--d-cloud);
+  }
+  [data-domain='community'] {
+    --domain: var(--d-community);
+  }
+  [data-domain='systems'] {
+    --domain: var(--d-systems);
+  }
+  [data-domain='ventures'] {
+    --domain: var(--d-ventures);
+  }
+  [data-domain='academic'] {
+    --domain: var(--d-academic);
+  }
+}

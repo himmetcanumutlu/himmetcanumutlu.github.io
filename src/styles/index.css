@@ -1,0 +1,13 @@
+/* Cascade order: later layers win regardless of selector specificity. */
+@layer reset, tokens, base, layout, components, utilities;
+
+@import './reset.css';
+@import './tokens.css';
+@import './themes.css';
+@import './base.css';
+@import './layout.css';
+@import './components/primitives.css';
+@import './components/shell.css';
+@import './components/hero.css';
+@import './components/footer.css';
+@import './utilities.css';

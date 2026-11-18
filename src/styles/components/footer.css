@@ -1,0 +1,113 @@
+@layer components {
+  .footer {
+    margin-top: var(--section-gap);
+    padding-block: var(--space-16) var(--space-10);
+    border-top: var(--border-width) solid var(--border);
+    background: linear-gradient(to bottom, var(--bg-elevated), var(--bg));
+  }
+
+  .footer.section:last-child {
+    padding-bottom: var(--space-10);
+  }
+
+  .footer__inner {
+    display: grid;
+    gap: var(--space-12);
+  }
+
+  @media (min-width: 56rem) {
+    .footer__inner {
+      grid-template-columns: minmax(0, 1.6fr) minmax(14rem, 1fr);
+      align-items: end;
+    }
+  }
+
+  .footer__cta {
+    display: grid;
+    gap: var(--space-4);
+    justify-items: start;
+  }
+
+  .footer__title {
+    font-size: var(--text-3xl);
+    letter-spacing: -0.03em;
+  }
+
+  .footer__bio {
+    color: var(--text-muted);
+    font-size: var(--text-md);
+  }
+
+  .footer__email {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-3);
+    margin-top: var(--space-2);
+  }
+
+  .footer__address {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-3);
+    font-family: var(--font-mono);
+    font-size: clamp(0.95rem, 0.8rem + 0.7vw, 1.25rem);
+    color: var(--text);
+    text-decoration: none;
+    overflow-wrap: anywhere;
+  }
+
+  .footer__address:hover {
+    color: var(--accent);
+  }
+
+  .footer__address .icon {
+    color: var(--accent);
+  }
+
+  .footer__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin-left: calc(var(--space-3) * -1);
+    padding: 0;
+    list-style: none;
+  }
+
+  .footer__meta {
+    display: grid;
+    gap: var(--space-2);
+    justify-items: start;
+    font-size: var(--text-sm);
+    color: var(--text-muted);
+  }
+
+  @media (min-width: 56rem) {
+    .footer__meta {
+      justify-items: end;
+      text-align: right;
+    }
+  }
+
+  .footer__location,
+  .footer__top {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+  }
+
+  .footer__location .icon,
+  .footer__top .icon {
+    --icon-size: 1rem;
+  }
+
+  .footer__top {
+    margin-top: var(--space-2);
+    color: var(--text-muted);
+    text-decoration: none;
+  }
+
+  .footer__top:hover {
+    color: var(--text);
+  }
+}

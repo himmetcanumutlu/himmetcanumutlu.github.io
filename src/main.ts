@@ -1,3 +1,4 @@
+import './styles/index.css'
 import App from './App'
 import { initStores } from './stores'
 

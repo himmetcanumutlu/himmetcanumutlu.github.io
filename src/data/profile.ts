@@ -1,4 +1,8 @@
+import { certificationHeadline, repoStats, uniqueCertificationCount } from './selectors'
 import type { Metric, Profile } from './types'
+
+const translationStars = repoStats('Python-100-Days-Turkish')?.stars ?? 111
+const certFloor = Math.floor(uniqueCertificationCount / 10) * 10
 
 export const profile: Profile = {
   name: 'Himmet Can Umutlu',
@@ -65,8 +69,8 @@ export const proofMetrics: Metric[] = [
   },
   {
     id: 'oss-stars',
-    value: 111,
-    display: '111',
+    value: translationStars,
+    display: `${translationStars}★`,
     suffix: '★',
     label: 'GitHub stars · Python-100-Days-Turkish',
     detail: 'Adopted by the Elginkan Foundation’s Python training',
@@ -91,8 +95,8 @@ export const proofMetrics: Metric[] = [
   },
   {
     id: 'certs',
-    value: 40,
-    display: '40+',
+    value: certFloor,
+    display: certificationHeadline,
     suffix: '+',
     label: 'Certifications',
     detail: 'Huawei · Google · IBM · NVIDIA · P&G',

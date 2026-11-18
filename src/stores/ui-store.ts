@@ -31,9 +31,10 @@ class UiStore extends Store {
     this.terminalRunId++
   }
 
-  async copyEmail(): Promise<void> {
+  async copyEmail(): Promise<boolean> {
     const ok = await copyText(profile.email)
     this.showToast(ok ? 'Email copied to clipboard' : `Couldn’t copy. Email: ${profile.email}`)
+    return ok
   }
 }
 
