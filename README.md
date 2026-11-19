@@ -30,7 +30,7 @@ npm run dev
 | `npm run typecheck` | Type-check the project |
 | `npm run validate` | Check the content layer for broken references and missing assets |
 | `npm run fetch:github` | Refresh repository stars/forks in `src/data/generated/github.json` |
-| `npm run fetch-assets` | One-time fetch of the headshot, touch icon, issuer logos and OG card into `public/assets/`; crops event photos from `assets-src/events/` (`-- --force` regenerates) |
+| `npm run fetch-assets` | One-time fetch of the headshot, touch icon, issuer logos, OG card and video thumbnails into `public/assets/`; crops event photos from `assets-src/events/` (`-- --force` regenerates) |
 | `npm run check` | Type check + content validation |
 
 ## Project structure

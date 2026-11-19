@@ -5,6 +5,8 @@ import Tag from '../ui/Tag'
 import NowLine from './NowLine'
 import { isBrowser } from '../../lib/env'
 
+const socialLinks = [profile.links.github, profile.links.linkedin, profile.links.youtube]
+
 /**
  * Above the fold: who, what, proof of now, and the three primary actions.
  * Falls back to a monogram if the portrait hasn't been added yet.
@@ -69,6 +71,16 @@ export default class Hero extends Component {
                 Contact
               </a>
             </div>
+
+            <ul class="hero__social" role="list" aria-label="Profiles">
+              {socialLinks.map(link => (
+                <li key={link.kind}>
+                  <a class="icon-btn" href={link.href} target="_blank" rel="noopener noreferrer" aria-label={link.label}>
+                    <Icon name={link.kind as 'github' | 'linkedin' | 'youtube'} />
+                  </a>
+                </li>
+              ))}
+            </ul>
           </div>
 
           <div class="hero__aside">

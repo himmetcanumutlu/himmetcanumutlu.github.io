@@ -198,6 +198,7 @@ unique('media', media.map(m => m.id))
 for (const item of media) {
   checkDomains(`media "${item.id}"`, item.domains)
   checkUrl(`media "${item.id}"`, item.href)
+  if (item.thumbnail) asset(item.thumbnail.src)
 }
 
 unique('commands', commands.map(c => c.id))

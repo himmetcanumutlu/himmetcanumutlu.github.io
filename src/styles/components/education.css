@@ -291,6 +291,17 @@
   }
 
   /* ── Media ───────────────────────────────────────────────────────── */
+  .media-card__thumb {
+    order: -1;
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    border-radius: var(--radius-md);
+    background: var(--surface-2);
+  }
+
   .media-card__meta {
     display: inline-flex;
     align-items: center;

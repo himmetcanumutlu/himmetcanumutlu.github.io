@@ -13,6 +13,7 @@
  *  - event covers: any photo dropped at assets-src/events/<event-id>.{jpg,jpeg,png,webp}
  *    is cropped to 3:2; portrait shots are letterboxed over a blurred copy of
  *    themselves instead of losing most of the frame (assets-src/ is git-ignored)
+ *  - video thumbnails: the YouTube thumbnail of every media item that declares one
  *
  * This is run by hand; nothing in CI calls it.
  */
@@ -23,6 +24,7 @@ import { fileURLToPath } from 'node:url'
 import sharp from 'sharp'
 import { domains } from '../src/data/domains'
 import { events } from '../src/data/events'
+import { media } from '../src/data/media'
 import { profile } from '../src/data/profile'
 import { SITE_URL } from '../src/data/site'
 
@@ -265,12 +267,48 @@ const writeEventCovers = async () => {
   }
 }
 
+// ── Video thumbnails ─────────────────────────────────────────────────
+const youtubeId = (href: string): string | null => {
+  const url = new URL(href)
+  if (url.hostname === 'youtu.be') return url.pathname.slice(1) || null
+  return url.searchParams.get('v')
+}
+
+const writeVideoThumbnails = async () => {
+  for (const item of media) {
+    if (!item.thumbnail) continue
+    const { src, width = 640, height = 360 } = item.thumbnail
+    if (!shouldWrite(src)) continue
+    const id = youtubeId(item.href)
+    if (!id) {
+      results.push({ path: src, status: 'missing', note: 'not a YouTube video link' })
+      continue
+    }
+    try {
+      let source: Buffer
+      try {
+        source = await download(`https://i.ytimg.com/vi/${id}/maxresdefault.jpg`)
+      } catch {
+        source = await download(`https://i.ytimg.com/vi/${id}/hqdefault.jpg`)
+      }
+      const image = await sharp(source)
+        .resize(width, height, { fit: 'cover' })
+        .jpeg({ quality: 80, mozjpeg: true, progressive: true })
+        .toBuffer()
+      await save(src, image)
+    } catch (error) {
+      results.push({ path: src, status: 'missing', note: (error as Error).message })
+    }
+  }
+}
+
 // ── Run ──────────────────────────────────────────────────────────────
 const avatar = await loadHeadshotSource()
 await writeHeadshots(avatar)
 await writeLogos()
 await writeOgImage(avatar)
 await writeEventCovers()
+await writeVideoThumbnails()
 
 if (!existsSync(out(profile.cv.href))) {
   results.push({ path: profile.cv.href, status: 'missing', note: 'add your CV manually' })

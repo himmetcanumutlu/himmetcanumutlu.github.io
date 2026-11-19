@@ -1,4 +1,5 @@
 import { domains } from './domains'
+import { media } from './media'
 import { profile } from './profile'
 import { includedProjects } from './selectors'
 import { sections } from './site'
@@ -23,6 +24,17 @@ const projectCommands: Command[] = includedProjects.map(project => ({
   keywords: [project.title, project.slug, ...project.stack, ...(project.context ? [project.context] : [])],
   action: { type: 'project', slug: project.slug },
 }))
+
+const mediaCommands: Command[] = media
+  .filter(item => item.type === 'video')
+  .map(item => ({
+    id: `media:${item.id}`,
+    group: 'Media',
+    label: `Watch: ${item.title}`,
+    hint: item.summary,
+    keywords: [item.title, item.outlet, 'video', 'talk', 'youtube', ...item.domains],
+    action: { type: 'open', href: item.href },
+  }))
 
 const domainCommands: Command[] = domains.map(domain => ({
   id: `domain:${domain.id}`,
@@ -77,6 +89,7 @@ const linkCommands: Command[] = [profile.links.github, profile.links.linkedin, p
 export const commands: Command[] = [
   ...sectionCommands,
   ...projectCommands,
+  ...mediaCommands,
   ...domainCommands,
   ...actionCommands,
   ...linkCommands,
