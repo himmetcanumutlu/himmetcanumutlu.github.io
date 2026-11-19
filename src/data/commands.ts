@@ -1,5 +1,6 @@
 import { domains } from './domains'
 import { media } from './media'
+import { withBase } from '../lib/paths'
 import { profile } from './profile'
 import { includedProjects } from './selectors'
 import { sections } from './site'
@@ -62,18 +63,11 @@ const actionCommands: Command[] = [
     action: { type: 'copy-email' },
   },
   {
-    id: 'action:terminal',
-    group: 'Actions',
-    label: 'Run whoami in the terminal',
-    keywords: ['whoami', 'terminal', 'shell', 'homelab', 'server'],
-    action: { type: 'terminal' },
-  },
-  {
     id: 'action:cv',
     group: 'Actions',
     label: 'Open CV (PDF)',
     keywords: ['cv', 'resume', 'résumé', 'pdf'],
-    action: { type: 'open', href: profile.cv.href },
+    action: { type: 'open', href: withBase(profile.cv.href) },
   },
 ]
 

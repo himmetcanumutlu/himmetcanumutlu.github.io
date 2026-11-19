@@ -22,15 +22,12 @@ const save = (theme: Theme): void => {
   }
 }
 
-const systemQuery = (): MediaQueryList | null =>
-  typeof window.matchMedia === 'function' ? window.matchMedia('(prefers-color-scheme: light)') : null
-
 /**
- * Light/dark theme. index.html applies the initial theme before first paint;
- * this store takes over after load and follows the OS until the user chooses.
+ * Paper (light) by default, charcoal (dark) on request. index.html applies
+ * the initial theme before first paint; this store takes over after load.
  */
 class ThemeStore extends Store {
-  theme: Theme = 'dark'
+  theme: Theme = 'light'
   /** True once the user picked a theme explicitly. */
   explicit = false
   ready = false
@@ -49,17 +46,10 @@ class ThemeStore extends Store {
 
     const saved = readSaved()
     const applied = document.documentElement.getAttribute('data-theme')
-    const media = systemQuery()
 
     this.explicit = saved !== null
-    this.theme = saved ?? (isTheme(applied) ? applied : media?.matches ? 'light' : 'dark')
+    this.theme = saved ?? (isTheme(applied) ? applied : 'light')
     this.apply()
-
-    media?.addEventListener('change', event => {
-      if (this.explicit) return
-      this.theme = event.matches ? 'light' : 'dark'
-      this.apply()
-    })
 
     this.ready = true
   }

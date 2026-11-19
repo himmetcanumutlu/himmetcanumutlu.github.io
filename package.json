@@ -26,6 +26,8 @@
     "fetch-assets": "tsx scripts/fetch-assets.ts"
   },
   "dependencies": {
+    "@fontsource-variable/newsreader": "^5.3.0",
+    "@fontsource-variable/source-sans-3": "^5.3.1",
     "@geajs/core": "^1.5.1",
     "@geajs/ssr": "^1.0.4"
   },

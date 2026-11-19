@@ -29,16 +29,30 @@ const REQUIRED_MARKERS = [
   'class="drawer"',
 ]
 
+// Preview builds live under a subpath of the same site: render them at that
+// URL, keep them out of search indexes, and leave 404/sitemap to the root.
+const basePath = process.env.BASE_PATH || '/'
+const isPreview = basePath !== '/'
+const pageUrl = new URL(basePath.replace(/^\/+/, ''), SITE_URL).href
+
 async function main(): Promise<void> {
   const indexHtml = await readFile(resolve(dist, 'index.html'), 'utf8')
   const { default: handler } = (await import(pathToFileURL(ssrEntry).href)) as { default: Handler }
 
-  const response = await handler(new Request(SITE_URL), { indexHtml })
+  const response = await handler(new Request(pageUrl), { indexHtml })
   if (!response.ok) throw new Error(`prerender returned HTTP ${response.status}`)
   const html = await response.text()
 
   const missing = REQUIRED_MARKERS.filter(marker => !html.includes(marker))
   if (missing.length > 0) throw new Error(`prerendered HTML is missing: ${missing.join(', ')}`)
+
+  if (isPreview) {
+    const noindex = html.replace('<meta name="robots" content="index, follow" />', '<meta name="robots" content="noindex, follow" />')
+    await writeFile(resolve(dist, 'index.html'), noindex, 'utf8')
+    await rm(resolve(root, '.ssr'), { recursive: true, force: true })
+    console.log(`[prerender] wrote dist/index.html for preview ${pageUrl} (noindex)`)
+    return
+  }
 
   await writeFile(resolve(dist, 'index.html'), html, 'utf8')
 

@@ -1,60 +1,5 @@
 @layer components {
-  /* ── Nav search trigger ──────────────────────────────────────────── */
-  .nav__search {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--space-2);
-    height: 2.5rem;
-    padding: 0 var(--space-2) 0 var(--space-3);
-    border: var(--border-width) solid var(--border);
-    border-radius: var(--radius-pill);
-    background: var(--surface);
-    color: var(--text-muted);
-    font-size: var(--text-sm);
-    transition:
-      color var(--duration-fast) var(--ease-out),
-      border-color var(--duration-fast) var(--ease-out);
-  }
-
-  .nav__search:hover {
-    color: var(--text);
-    border-color: var(--border-strong);
-  }
-
-  .nav__search .icon {
-    --icon-size: 1rem;
-  }
-
-  .nav__search kbd {
-    font-size: var(--text-2xs);
-  }
-
-  /* Platform-specific shortcut hint; data-platform is set in index.html. */
-  .kbd-mac,
-  [data-platform='mac'] .kbd-other {
-    display: none;
-  }
-
-  [data-platform='mac'] .kbd-mac {
-    display: inline-block;
-  }
-
-  @media (max-width: 39.99rem) {
-    .nav__search {
-      width: 2.5rem;
-      justify-content: center;
-      padding: 0;
-    }
-
-    .nav__search-label,
-    .nav__search .kbd-mac,
-    .nav__search .kbd-other,
-    [data-platform='mac'] .nav__search .kbd-mac {
-      display: none;
-    }
-  }
-
-  /* ── Palette dialog ──────────────────────────────────────────────── */
+  /* ── Palette: a plain search sheet ───────────────────────────────── */
   .palette[open] {
     display: flex;
     flex-direction: column;
@@ -65,8 +10,12 @@
     align-items: center;
     gap: var(--space-3);
     padding: var(--space-4) var(--space-5);
-    border-bottom: var(--border-width) solid var(--border);
+    border-bottom: var(--border-width) solid var(--rule);
     color: var(--text-subtle);
+  }
+
+  .palette__search .icon {
+    --icon-size: 1.05rem;
   }
 
   .palette__input {
@@ -75,54 +24,48 @@
     border: 0;
     background: transparent;
     color: var(--text);
-    font-size: var(--text-md);
+    font-family: var(--font-serif);
+    font-size: var(--text-lg);
+    outline: none;
   }
 
   .palette__input::placeholder {
     color: var(--text-subtle);
   }
 
-  .palette__input:focus,
-  .palette__input:focus-visible {
-    outline: none;
-  }
-
   .palette__results {
     flex: 1;
-    min-height: 0;
     overflow-y: auto;
-    padding: var(--space-2);
     list-style: none;
+    padding: var(--space-2) 0;
     overscroll-behavior: contain;
   }
 
   .palette__option {
     display: grid;
-    grid-template-columns: 5.5rem 1fr;
-    gap: 0.1rem var(--space-3);
+    grid-template-columns: 5.5rem minmax(0, 1fr);
+    gap: 0 var(--space-3);
     align-items: baseline;
-    padding: var(--space-3) var(--space-3);
-    border-radius: var(--radius-sm);
+    padding: var(--space-2) var(--space-5);
+    border-left: 2px solid transparent;
     cursor: pointer;
   }
 
   .palette__option.is-active {
     background: var(--surface-2);
-    box-shadow: inset 2px 0 0 var(--accent);
+    border-left-color: var(--accent);
   }
 
   .palette__group {
-    grid-row: span 2;
+    grid-row: 1 / span 2;
     font-family: var(--font-mono);
     font-size: var(--text-2xs);
-    letter-spacing: var(--tracking-wide);
-    text-transform: uppercase;
     color: var(--text-subtle);
   }
 
   .palette__label {
     font-size: var(--text-sm);
-    font-weight: var(--weight-medium);
+    font-weight: var(--weight-semibold);
     color: var(--text);
   }
 
@@ -139,29 +82,35 @@
   }
 
   .palette__empty {
-    padding: var(--space-6) var(--space-5);
+    padding: var(--space-8) var(--space-5);
     color: var(--text-muted);
     font-size: var(--text-sm);
   }
 
+  .palette__empty[hidden] {
+    display: none;
+  }
+
   .palette__footer {
     display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-4);
+    gap: var(--space-5);
     padding: var(--space-3) var(--space-5);
-    border-top: var(--border-width) solid var(--border);
-    font-family: var(--font-mono);
+    border-top: var(--border-width) solid var(--rule);
     font-size: var(--text-2xs);
     color: var(--text-subtle);
   }
 
-  .palette__footer kbd {
-    margin-right: 0.15rem;
-  }
-
-  @media (max-width: 39.99rem) {
+  @media (max-width: 30rem) {
     .palette__footer {
       display: none;
+    }
+
+    .palette__option {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .palette__group {
+      grid-row: auto;
     }
   }
 }

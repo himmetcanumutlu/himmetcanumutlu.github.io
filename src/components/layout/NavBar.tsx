@@ -4,86 +4,80 @@ import { sections } from '../../data/site'
 import { isBrowser } from '../../lib/env'
 import { watchActiveSection } from '../../lib/visible'
 import paletteStore from '../../stores/palette-store'
-import Icon from '../ui/Icon'
 import ThemeToggle from '../ui/ThemeToggle'
 
-const navSections = sections.filter(section => section.inNav)
+// Every section after the hero, numbered in page order (matches the section
+// counters in the headings).
+const indexed = sections
+  .filter(section => section.id !== 'top')
+  .map((section, index) => ({ section, number: String(index + 1).padStart(2, '0') }))
 const spiedIds = sections.map(section => section.id)
 
-/** Sticky top bar with scroll-spy. Links are plain anchors, so it works without JS. */
+/**
+ * The margin rail: name, a numbered index of the page with scroll-spy, and
+ * the two quiet controls (search, theme). On narrow screens it collapses to
+ * a slim top bar. Links are plain anchors, so it works without JS.
+ */
 export default class NavBar extends Component {
   active = ''
-  scrolled = false
   stopSpy: (() => void) | null = null
-
-  handleScroll = (): void => {
-    const scrolled = window.scrollY > 8
-    if (scrolled !== this.scrolled) this.scrolled = scrolled
-  }
 
   onAfterRender(): void {
     // Lifecycle hooks also run during prerendering; browser-only from here.
     if (!isBrowser()) return
     if (this.stopSpy) return
-
-    // Sections are looked up lazily on each pass, so ones mounted after the
-    // nav are picked up without waiting for a frame.
     this.stopSpy = watchActiveSection(spiedIds, id => {
       this.active = id === 'top' ? '' : id
     })
-
-    this.handleScroll()
-    window.addEventListener('scroll', this.handleScroll, { passive: true })
   }
 
   dispose(): void {
     this.stopSpy?.()
-    window.removeEventListener('scroll', this.handleScroll)
     super.dispose()
   }
 
   template() {
     return (
-      <header class={`nav${this.scrolled ? ' is-scrolled' : ''}`}>
-        <div class="container nav__inner">
-          <a class="nav__brand" href="#top">
-            <span class="nav__mark" aria-hidden="true">
-              HC
-            </span>
-            <span class="nav__name">{profile.displayName}</span>
+      <header class="rail">
+        <div class="rail__inner">
+          <a class="rail__brand" href="#top">
+            <span class="rail__name">{profile.displayName}</span>
+            <span class="rail__role">AI, cloud and communities</span>
           </a>
-          <nav class="nav__links" aria-label="Sections">
-            <ul class="nav__list" role="list">
-              {navSections.map(section => (
-                <li key={section.id}>
+
+          <nav class="rail__nav" aria-label="Sections">
+            <ol class="rail__index" role="list">
+              {indexed.map(entry => (
+                <li key={entry.section.id}>
                   <a
-                    href={`#${section.id}`}
-                    class={`nav__link${this.active === section.id ? ' is-active' : ''}`}
-                    aria-current={this.active === section.id ? 'location' : 'false'}
+                    href={`#${entry.section.id}`}
+                    class={`rail__link${this.active === entry.section.id ? ' is-active' : ''}`}
+                    aria-current={this.active === entry.section.id ? 'location' : 'false'}
                   >
-                    {section.label}
+                    <span class="rail__num" aria-hidden="true">
+                      {entry.number}
+                    </span>
+                    <span class="rail__label">{entry.section.label}</span>
                   </a>
                 </li>
               ))}
-            </ul>
+            </ol>
           </nav>
-          <div class="nav__actions">
+
+          <div class="rail__actions">
             <button
               type="button"
-              class="nav__search"
-              aria-label="Open command palette"
+              class="rail__search"
               aria-keyshortcuts="Control+K Meta+K"
               click={() => paletteStore.openPalette()}
             >
-              <Icon name="search" />
-              <span class="nav__search-label">Search</span>
+              <span class="rail__search-label">Search</span>
               <kbd class="kbd-mac">⌘K</kbd>
               <kbd class="kbd-other">Ctrl K</kbd>
             </button>
             <ThemeToggle />
           </div>
         </div>
-        <div class="nav__progress" aria-hidden="true"></div>
       </header>
     )
   }

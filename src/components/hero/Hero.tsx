@@ -1,15 +1,19 @@
 import { Component } from '@geajs/core'
 import { profile } from '../../data/profile'
-import Icon from '../ui/Icon'
-import Tag from '../ui/Tag'
-import NowLine from './NowLine'
 import { isBrowser } from '../../lib/env'
+import { withBase } from '../../lib/paths'
+import Icon from '../ui/Icon'
+import NowLine from './NowLine'
 
 const socialLinks = [profile.links.github, profile.links.linkedin, profile.links.youtube]
+const focusLine = profile.identityChips.map(chip => chip.label).join(' · ')
+const headshotSrc = withBase(profile.headshot.src)
+const cvHref = withBase(profile.cv.href)
 
 /**
- * Above the fold: who, what, proof of now, and the three primary actions.
- * Falls back to a monogram if the portrait hasn't been added yet.
+ * The opening page: name, a plain-spoken introduction, the portrait and a
+ * short "now" note in the margin. Falls back to a monogram if the portrait
+ * hasn't been added yet.
  */
 export default class Hero extends Component {
   photoFailed = false
@@ -31,43 +35,29 @@ export default class Hero extends Component {
   template() {
     return (
       <section id="top" class="hero" aria-labelledby="hero-title">
-        <div class="container hero__inner">
-          <div class="hero__copy">
-            <p class="hero__eyebrow">
-              <span class="hero__status">
-                <span class="hero__status-dot" aria-hidden="true"></span>
-                {profile.availability}
-              </span>
-              <span class="hero__location">
-                <Icon name="map-pin" />
-                {profile.location}
-              </span>
-            </p>
+        <p class="hero__eyebrow">
+          <span class="hero__status">{profile.availability}</span>
+          <span class="hero__location">{profile.location}</span>
+        </p>
 
+        <div class="hero__body">
+          <div class="hero__copy">
             <h1 id="hero-title" class="hero__title">
               {profile.displayName}
             </h1>
             <p class="hero__role">{profile.roleLine}</p>
             <p class="hero__headline">{profile.headline}</p>
-
-            <ul class="tag-list hero__chips" role="list" aria-label="Focus areas">
-              {profile.identityChips.map(chip => (
-                <li key={chip.label}>
-                  <Tag label={chip.label} domain={chip.domain} />
-                </li>
-              ))}
-            </ul>
+            <p class="hero__focus">{focusLine}</p>
 
             <div class="hero__ctas">
               <a class="btn btn--primary" href="#work">
-                <span>View work</span>
+                <span>Read the case studies</span>
                 <Icon name="arrow-right" />
               </a>
-              <a class="btn" href={profile.cv.href} download="Himmet-Can-Umutlu-CV.pdf">
-                <Icon name="download" />
-                <span>Download CV</span>
+              <a class="link-quiet" href={cvHref} download="Himmet-Can-Umutlu-CV.pdf">
+                Download CV
               </a>
-              <a class="btn btn--ghost" href="#contact">
+              <a class="link-quiet" href="#contact">
                 Contact
               </a>
             </div>
@@ -75,31 +65,31 @@ export default class Hero extends Component {
             <ul class="hero__social" role="list" aria-label="Profiles">
               {socialLinks.map(link => (
                 <li key={link.kind}>
-                  <a class="icon-btn" href={link.href} target="_blank" rel="noopener noreferrer" aria-label={link.label}>
-                    <Icon name={link.kind as 'github' | 'linkedin' | 'youtube'} />
+                  <a href={link.href} target="_blank" rel="noopener noreferrer me">
+                    {link.label}
                   </a>
                 </li>
               ))}
             </ul>
           </div>
 
-          <div class="hero__aside">
-            <div class={`hero__photo${this.photoFailed ? ' is-fallback' : ''}`}>
+          <aside class="hero__aside" aria-label="Portrait and current roles">
+            <figure class={`hero__photo${this.photoFailed ? ' is-fallback' : ''}`}>
               <span class="hero__monogram" aria-hidden="true">
                 HC
               </span>
               <img
                 ref={this.photoEl}
-                src={profile.headshot.src}
+                src={headshotSrc}
                 alt={profile.headshot.alt}
                 width={profile.headshot.width}
                 height={profile.headshot.height}
                 decoding="async"
                 fetchPriority="high"
               />
-            </div>
+            </figure>
             <NowLine items={profile.now} />
-          </div>
+          </aside>
         </div>
       </section>
     )

@@ -91,3 +91,16 @@ Every push to `main` runs `.github/workflows/deploy.yml`, which refreshes GitHub
 stats, type-checks, builds and publishes `dist/` to GitHub Pages.
 
 One-time setup: **Settings → Pages → Build and deployment → Source: GitHub Actions**.
+
+### Preview branches
+
+A branch listed in `PREVIEW_BRANCHES` (in `deploy.yml`) is published under its
+own subpath, e.g. `19-11-2026` at `https://himmetcanumutlu.github.io/19-11-2026/`.
+Pushing to it runs `.github/workflows/preview.yml`; when that passes, the main
+deploy workflow rebuilds the root site from `main`, builds the branch with
+`BASE_PATH=/<branch>/` into `dist/<branch>/`, and publishes both together.
+Deploys always run from `main`, because the `github-pages` environment only
+accepts it. Preview pages are marked `noindex`.
+
+To build a preview locally: `BASE_PATH=/19-11-2026/ npm run build`
+(in Git Bash on Windows, prefix `MSYS_NO_PATHCONV=1`).

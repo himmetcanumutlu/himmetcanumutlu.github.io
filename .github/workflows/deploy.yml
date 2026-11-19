@@ -1,9 +1,18 @@
 name: Deploy to GitHub Pages
 
+# The site on main is served from the root. Each preview branch listed in
+# PREVIEW_BRANCHES is built with its own base path and published under
+# /<branch>/ in the same Pages artifact. Deploys always run from main (the
+# github-pages environment only accepts main); a push to a preview branch
+# triggers this workflow through the "Preview branch" workflow.
+
 on:
   push:
     branches: [main]
   workflow_dispatch:
+  workflow_run:
+    workflows: [Preview branch]
+    types: [completed]
 
 permissions:
   contents: read
@@ -14,12 +23,18 @@ concurrency:
   group: pages
   cancel-in-progress: true
 
+env:
+  PREVIEW_BRANCHES: '19-11-2026'
+
 jobs:
   build:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout main
         uses: actions/checkout@v4
+        with:
+          ref: main
 
       - name: Set up Node
         uses: actions/setup-node@v4
@@ -40,6 +55,29 @@ jobs:
 
       - name: Build
         run: npm run build
+
+      - name: Build preview branches
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          for branch in $PREVIEW_BRANCHES; do
+            if ! git ls-remote --exit-code --heads origin "$branch" > /dev/null; then
+              echo "::notice::Preview branch $branch not found; skipping"
+              continue
+            fi
+            git fetch --depth=1 origin "$branch"
+            rm -rf "../preview-$branch"
+            git worktree add --detach "../preview-$branch" FETCH_HEAD
+            (
+              cd "../preview-$branch"
+              npm ci
+              npm run fetch:github
+              npm run typecheck
+              BASE_PATH="/$branch/" npm run build
+            )
+            rm -rf "dist/$branch"
+            cp -r "../preview-$branch/dist" "dist/$branch"
+          done
 
       - name: Configure Pages
         uses: actions/configure-pages@v5

@@ -2,12 +2,12 @@ import type { Section, SectionId, Theme } from './types'
 
 export const SITE_URL = 'https://himmetcanumutlu.github.io/'
 export const GITHUB_OWNER = 'himmetcanumutlu'
-export const THEME_STORAGE_KEY = 'theme'
+export const THEME_STORAGE_KEY = 'theme-editorial'
 
 /** Must match the <meta name="theme-color"> values set in index.html. */
 export const THEME_COLORS: Record<Theme, string> = {
-  dark: '#0b0d12',
-  light: '#f6f6f3',
+  dark: '#141413',
+  light: '#fbf9f5',
 }
 
 export const sections: Section[] = [

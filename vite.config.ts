@@ -1,9 +1,10 @@
 import { defineConfig } from 'vite'
 import { geaPlugin } from '@geajs/vite-plugin'
 
-// User site (himmetcanumutlu.github.io) is served from the domain root.
+// The user site is served from the domain root; preview branches are built
+// with BASE_PATH=/<branch>/ and published under that subpath.
 export default defineConfig({
-  base: '/',
+  base: process.env.BASE_PATH || '/',
   plugins: [geaPlugin()],
   build: {
     outDir: 'dist',

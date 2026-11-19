@@ -110,10 +110,12 @@ export default class AppShell extends Component {
           Skip to content
         </a>
         <NavBar />
-        <main id="main" tabIndex={-1}>
-          {children}
-        </main>
-        <Footer />
+        <div class="page">
+          <main id="main" tabIndex={-1}>
+            {children}
+          </main>
+          <Footer />
+        </div>
         <CaseStudyDrawer />
         <Toast />
       </div>

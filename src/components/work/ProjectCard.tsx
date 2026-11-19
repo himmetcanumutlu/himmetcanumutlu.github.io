@@ -1,45 +1,40 @@
 import { domainAttr, repoStats } from '../../data/selectors'
 import type { Project } from '../../data/types'
 import { projectTypeLabel } from '../../lib/labels'
-import Icon from '../ui/Icon'
-import Tag from '../ui/Tag'
 
 interface ProjectCardProps {
   project: Project
 }
 
+/** One lab project as a row of the index: kind, title and line, stack, source. */
 export default function ProjectCard({ project }: ProjectCardProps) {
   const stats = repoStats(project.repo)
   const repoUrl = stats?.url ?? project.links.find(link => link.kind === 'github')?.href
+  const meta = `${projectTypeLabel[project.type]}${project.lang === 'tr' ? ' · in Turkish' : ''} · ${project.year}`
+  const stars = stats && stats.stars > 0 ? `★ ${stats.stars}` : ''
 
   return (
-    <article class="card card--interactive project-card" data-d={domainAttr(project.domains)} data-domain={project.domains[0]}>
-      <div class="project-card__meta">
-        <span class="badge">{projectTypeLabel[project.type]}</span>
-        {project.lang === 'tr' ? <span class="badge">TR</span> : ''}
-        {stats && stats.stars > 0 ? <span class="project-card__stars">★ {stats.stars}</span> : ''}
+    <article class="row project-row" data-d={domainAttr(project.domains)} data-domain={project.domains[0]}>
+      <p class="row__meta">{meta}</p>
+      <div class="row__main">
+        <h3 class="row__title">
+          <a class="stretched-link" href={`?project=${project.slug}`} data-project={project.slug}>
+            {project.title}
+          </a>
+        </h3>
+        <p class="row__body">{project.tagline}</p>
+        <p class="row__stack">{project.stack.slice(0, 3).join(' / ')}</p>
       </div>
-      <h3 class="card__title">
-        <a class="stretched-link" href={`?project=${project.slug}`} data-project={project.slug}>
-          {project.title}
-        </a>
-      </h3>
-      <p class="card__body">{project.tagline}</p>
-      <ul class="tag-list" role="list" aria-label="Stack">
-        {project.stack.slice(0, 3).map(item => (
-          <li key={item}>
-            <Tag label={item} variant="mono" size="sm" />
-          </li>
-        ))}
-      </ul>
-      {repoUrl ? (
-        <a class="project-card__repo" href={repoUrl} target="_blank" rel="noopener noreferrer">
-          <Icon name="github" />
-          <span>Source</span>
-        </a>
-      ) : (
-        ''
-      )}
+      <p class="row__aside">
+        <span class="row__stars">{stars}</span>
+        {repoUrl ? (
+          <a class="row__source" href={repoUrl} target="_blank" rel="noopener noreferrer">
+            Source
+          </a>
+        ) : (
+          ''
+        )}
+      </p>
     </article>
   )
 }

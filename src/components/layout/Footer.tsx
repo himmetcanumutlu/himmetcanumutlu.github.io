@@ -2,6 +2,7 @@ import { profile } from '../../data/profile'
 import { formatMonth, githubGeneratedAt } from '../../data/selectors'
 import { sectionById } from '../../data/site'
 import CopyEmail from '../ui/CopyEmail'
+import { withBase } from '../../lib/paths'
 import Icon from '../ui/Icon'
 
 const contact = sectionById('contact')
@@ -40,7 +41,7 @@ export default function Footer() {
               </li>
             ))}
             <li>
-              <a class="btn btn--ghost btn--sm" href={profile.cv.href} download="Himmet-Can-Umutlu-CV.pdf">
+              <a class="btn btn--ghost btn--sm" href={withBase(profile.cv.href)} download="Himmet-Can-Umutlu-CV.pdf">
                 <Icon name="download" />
                 <span>CV (PDF)</span>
               </a>

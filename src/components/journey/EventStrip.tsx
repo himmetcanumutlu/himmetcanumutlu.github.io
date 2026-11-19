@@ -2,6 +2,7 @@ import { Component } from '@geajs/core'
 import { events } from '../../data/events'
 import { domainAttr } from '../../data/selectors'
 import { isBrowser } from '../../lib/env'
+import { withBase } from '../../lib/paths'
 
 const sorted = [...events].sort((a, b) => b.sortKey.localeCompare(a.sortKey))
 
@@ -54,7 +55,7 @@ export default class EventStrip extends Component {
                   {event.name}
                 </span>
                 <img
-                  src={event.cover.src}
+                  src={withBase(event.cover.src)}
                   alt={event.cover.alt}
                   width={event.cover.width}
                   height={event.cover.height}

@@ -3,6 +3,7 @@ import { domainAttr } from '../../data/selectors'
 import { getSection } from '../../data/site'
 import type { MediaItem } from '../../data/types'
 import SectionHeader from '../layout/SectionHeader'
+import { withBase } from '../../lib/paths'
 import Icon from '../ui/Icon'
 
 const section = getSection('media')
@@ -43,7 +44,7 @@ export default function MediaWriting() {
                 {item.thumbnail ? (
                   <img
                     class="media-card__thumb"
-                    src={item.thumbnail.src}
+                    src={withBase(item.thumbnail.src)}
                     alt={item.thumbnail.alt}
                     width={item.thumbnail.width}
                     height={item.thumbnail.height}
