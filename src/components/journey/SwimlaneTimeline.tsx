@@ -34,6 +34,15 @@ export default function SwimlaneTimeline() {
               ))}
             </ol>
             <p class="lane__summary">{org.summary}</p>
+            {org.recognition && org.recognition.length > 0 ? (
+              <ul class="lane__wins" role="list" aria-label={`Recognition at ${org.shortName}`}>
+                {org.recognition.map(item => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            ) : (
+              ''
+            )}
             {org.links.length > 0 ? (
               <ul class="lane__links" role="list">
                 {org.links.map(link => (

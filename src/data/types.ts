@@ -187,6 +187,8 @@ export interface Organization {
   status: OrgStatus
   summary: string
   highlights: string[]
+  /** Awards and results earned in this community; shown on the lane. */
+  recognition?: string[]
   links: ExternalLink[]
   order: number
 }

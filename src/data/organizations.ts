@@ -17,6 +17,7 @@ export const organizations: Organization[] = [
       'Huawei Cloud HCSD Campus Ambassador certification.',
       'Handed off to a newly selected Campus Ambassador for 2026–2027.',
     ],
+    recognition: ['Fan of the Year Award, HSD Türkiye, presented at the Huawei Ümraniye office (Dec 2025)'],
     links: [],
     order: 1,
   },
@@ -30,6 +31,7 @@ export const organizations: Organization[] = [
     summary:
       'Building the local cloud ecosystem by organizing AWS-focused technical workshops and developer events, and guiding students through cloud fundamentals and certification paths.',
     highlights: ['Founding core team member.', 'AWS-focused workshops and developer events.'],
+    recognition: ['AWS Community GameDay Europe 2026, team MAPSA: 1st in Türkiye, 32nd globally'],
     links: [
       {
         label: 'AWS SBG member badge',
@@ -52,6 +54,7 @@ export const organizations: Organization[] = [
       'Created the club’s social channels and visual identity from scratch.',
       'Co-delivered the Prompt Engineering workshop, now in its 3rd year.',
     ],
+    recognition: ['Team Principal of BSKK-Karting for the 25/26 season, which completed the 40-minute Sivas Grand Prix'],
     links: [],
     order: 3,
   },

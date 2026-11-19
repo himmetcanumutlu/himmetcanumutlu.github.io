@@ -56,7 +56,7 @@ export const experience: Experience[] = [
     domains: ['systems', 'community'],
     summary: 'Technical articles on software development and technology.',
     highlights: ['Wrote and edited technical articles for the Siber Otag website for two years.'],
-    links: [{ label: 'siberotag.com', href: 'https://www.siberotag.com', kind: 'web' }],
+    links: [{ label: 'siberotag.com (archived)', href: 'https://web.archive.org/web/20260207195104/http://siberotag.com/', kind: 'web' }],
     order: 4,
   },
   {

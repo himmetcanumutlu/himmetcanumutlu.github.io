@@ -198,6 +198,25 @@
     line-height: var(--leading-relaxed);
   }
 
+  .lane__wins {
+    display: grid;
+    gap: var(--space-1);
+    font-size: var(--text-sm);
+    line-height: var(--leading-relaxed);
+  }
+
+  .lane__wins li {
+    position: relative;
+    padding-left: 1.35rem;
+  }
+
+  .lane__wins li::before {
+    content: '★';
+    position: absolute;
+    left: 0;
+    color: var(--domain);
+  }
+
   /* ── Talks ───────────────────────────────────────────────────────── */
   .talk__host {
     font-size: var(--text-sm);
